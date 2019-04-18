@@ -1,0 +1,2 @@
+Studybox was originally implemented in 2014 and the v1 codebase was implemented with the mentality of "just jam in".
+This repositry intends to rewrite the api gateway portion which is a microservice of many microservices.
