@@ -1,0 +1,2 @@
+export const SUBMIT_EMAIL	= 'SUBMIT_EMAIL'
+export const ENTER_EMAIL = 'ENTER_EMAIL'
