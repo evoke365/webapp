@@ -1,17 +1,43 @@
 import {
-  SUBMIT_EMAIL
-} from '../constants/ActionTypes'
+  VALIDATE_EMAIL, VALIDATE_EMAIL_SUCCESS, VALIDATE_EMAIL_FAIL
+} from '../actions/authEmail'
 
 const initialState = {
-  email: "",
-  error: ""
+  email: null,
+  loading: false,
+  error: null,
 }
 
 export default function authEmail(state = initialState, action){
   switch (action.type) {
-    case SUBMIT_EMAIL:
-      return Object.assign({}, state, {error: action.payload})
+    case VALIDATE_EMAIL:
+      return {
+        ...state,
+        ...{
+          email: null,
+          error: null,
+          loading: true,
+        },
+      };
+    case VALIDATE_EMAIL_SUCCESS:
+    return {
+      ...state,
+      ...{
+        email: action.payload,
+        error: null,
+        loading: false,
+      },
+    };
+    case VALIDATE_EMAIL_FAIL:
+    return {
+      ...state,
+      ...{
+        email: null,
+        error: action.error,
+        loading: false,
+      },
+    };
     default:
-      return Object.assign({}, state)
+    return state;
   }
 }

@@ -1,13 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import './index.css';
+import axios from 'axios';
+import axiosMiddleware from 'redux-axios-middleware';
 import AppRouter from './App';
+import { API } from './config'
 import reducers from './reducers'
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(reducers);
+const options = {
+  interceptors: {
+      response: [
+      {
+          // args are { getState, dispatch, getSourceAction }, response
+          success: (_, response) => response.data,
+          // args are { getState, dispatch, getSourceAction }, error
+          error: (_, error) => Promise.reject(error),
+      },
+      ],
+  },
+};
+
+const client = axios.create({
+  baseURL: API,
+  responseType: 'json',
+});
+
+const store = createStore(reducers, {}, applyMiddleware(axiosMiddleware(client, options)));
 ReactDOM.render(	
     <Provider store = {store}>
         <AppRouter />

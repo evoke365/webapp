@@ -4,37 +4,20 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { submitEmail } from '../actions/authEmail'
 import { loadState, saveState } from '../localStorage'
-import { GET_USER, AUTH_USER } from '../config'
 
 const INVALID_EMAIL_ERROR = "Let’s try that again, the email address you have entered is invalid"
 
 class AuthEmail extends Component{
   state = {
     email: "",
+    error: "",
   }
   componentDidMount() {
     if(loadState()) {
       if(typeof(loadState().email)!="undefined" && 
         typeof(loadState().token)!="undefined"){
-        this.props.setView("home");
+        //this.props.setView("home");
       }
-    }
-    if(this.props.userhash !== 'undefined') {
-      // validate user email
-      fetch(AUTH_USER+"/"+this.props.userhash)
-      .then(response => {
-        if(response.status === 200) {
-          return response.json();
-        }
-      })
-      .then(data => {
-        saveState({"email":data.email, "found":data.Success});
-        this.props.setView("password");
-      })
-      .catch(err => {
-        console.log(err);
-        return undefined;
-      })
     }
     ReactDOM.findDOMNode(this.refs.emailInput).focus(); 
   }
@@ -42,30 +25,19 @@ class AuthEmail extends Component{
     ReactDOM.findDOMNode(this.refs.emailInput).focus(); 
   }
   onSubmit(){
-    if (this.props.store.authEmail.email === "" || validateEmail(this.props.store.authEmail.email) === false) {
-      this.props.submitEmail(INVALID_EMAIL_ERROR);
-    }
-    else {
-      this.props.submitEmail("");
-      fetch(GET_USER+"/"+this.props.store.authEmail.email)
-        .then(response => {
-          if(response.status !== 200) {
-            this.props.submitEmail(INVALID_EMAIL_ERROR);
-          }
-          return response.json();
-        })
-        .then(data => {
-          saveState({"email":this.props.store.authEmail.email, "found":data.Success});
-          this.props.setView("password");
-        })
-        .catch(err => {
-          console.log(err);
-          return undefined;
-        })
+    console.log(this.state);
+    if (this.state.email === "" || validateEmail(this.state.email) === false) {
+      this.setState({
+        email: this.state.email,
+        error: INVALID_EMAIL_ERROR,
+      })
+    } else {
+      this.props.submitEmail(this.state.email);
+      console.log(this.props);
     }
   }
   render() {
-    var error = this.props.store.authEmail.error;
+    var error = this.state.error;
     return (
       <div className="step-1">
         <p className="text-header">studybox.io</p>
@@ -78,7 +50,8 @@ class AuthEmail extends Component{
           }} 
           onChange={(e)=>{
             this.setState({
-              email: e.target.value
+              email: e.target.value,
+              error: "",
           })
           }}/>
           <p className={"text-error" + (error === "" ? "" : " text-error-visible" )}>{error}</p>
@@ -90,7 +63,7 @@ class AuthEmail extends Component{
 }
 
 function validateEmail(e){
-      var re = /^(([^<>()[]\.,;:\s@"]+(\.[^<>()[]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(e);
 }
 function mapStateToProps(store, props) {
