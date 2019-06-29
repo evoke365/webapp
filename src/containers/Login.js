@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+
 import { submitEmail, enterEmail } from '../actions/login'
+import CustomInput from '../components/CustomInput'
 
 import WithStyles from '@material-ui/core/styles/withStyles';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -28,14 +28,8 @@ class Login extends Component{
         <Grid item>
           <Typography variant="h4" align="center">studybox.io</Typography>
         </Grid>
-        <Grid item className={classes.container}>
-        <MuiThemeProvider theme={theme}>
-          <TextField
-              id="standard-dense"
-              label="Your email address"
-              margin="dense"
-          />
-          </MuiThemeProvider>
+          <Grid item className={classes.container}>
+            <CustomInput label="Your email address" />
           </Grid>
           <Grid item className={classes.container}>
           <Button className={classes._button} variant="contained" color="primary" size="large" fullWidth>
@@ -47,36 +41,6 @@ class Login extends Component{
     )
   }
 }
-
-const theme = createMuiTheme({
-  overrides: {
-    MuiInput: {
-      root: {
-        fontSize: 20,
-        width: 500,
-      },
-      underline: {
-        '&:before': { //underline color when textfield is inactive
-          borderBottom:'1px solid orange',
-        },
-        '&:hover:not($disabled):before': { //underline color when hovered 
-          borderBottom: '2px solid orange',
-        },
-        '&:after': { //underline color when selected 
-          borderBottom: '2px solid orange',
-        },
-      },
-    },
-    MuiInputLabel: { 
-      root: {
-        fontSize: 20, 
-        "&$focused": {
-          color: 'rgba(0, 0, 0, 0.54)',
-        },
-      },
-    },
-  }
-});
 
 const styles = ({
   body: {
