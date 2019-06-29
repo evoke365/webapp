@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,3 +67,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+=======
+Studybox was originally implemented in 2014 and the v1 codebase was implemented with the mentality of "just jam in".
+This repositry intends to rewrite the api gateway portion which is a microservice of many microservices.
+>>>>>>> ab8f8e57540331eedde970b1c0d0807231bce263
