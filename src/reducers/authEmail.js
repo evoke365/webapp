@@ -23,7 +23,7 @@ export default function authEmail(state = initialState, action){
     return {
       ...state,
       ...{
-        email: action.payload,
+        email: action.payload.email,
         error: null,
         loading: false,
       },
@@ -33,7 +33,7 @@ export default function authEmail(state = initialState, action){
       ...state,
       ...{
         email: null,
-        error: action.error,
+        error: "internal error",
         loading: false,
       },
     };

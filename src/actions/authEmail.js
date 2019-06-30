@@ -10,6 +10,7 @@ export function submitEmail(email){
 	return {
 		types: [VALIDATE_EMAIL, VALIDATE_EMAIL_SUCCESS, VALIDATE_EMAIL_FAIL],
 		payload: {
+			data: email,
 			request: {
 			  url: GET_USER+"/"+email,
 			},
