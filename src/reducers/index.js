@@ -1,4 +1,5 @@
 import authEmail from './authEmail'
+import newSignup from './signup'
 import authPassword from './authPassword'
 import home from './home'
 import confirmation from './confirmation'
@@ -7,6 +8,7 @@ import { combineReducers } from 'redux'
 
 const reducers = combineReducers({
 	authEmail,
+	newSignup,
 	authPassword,
 	home,
 	confirmation,

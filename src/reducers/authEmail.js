@@ -1,11 +1,11 @@
 import {
   VALIDATE_EMAIL, VALIDATE_EMAIL_SUCCESS, VALIDATE_EMAIL_FAIL
-} from '../actions/authEmail'
+} from '../actions/login'
 
 const initialState = {
-  email: null,
+  email: "",
   loading: false,
-  error: null,
+  error: "",
 }
 
 export default function authEmail(state = initialState, action){
@@ -14,17 +14,18 @@ export default function authEmail(state = initialState, action){
       return {
         ...state,
         ...{
-          email: null,
-          error: null,
+          email: "",
+          error: "",
           loading: true,
         },
       };
     case VALIDATE_EMAIL_SUCCESS:
+      console.log("here");
     return {
       ...state,
       ...{
-        email: action.payload.email,
-        error: null,
+        email: action.payload,
+        error: "",
         loading: false,
       },
     };
@@ -32,7 +33,7 @@ export default function authEmail(state = initialState, action){
     return {
       ...state,
       ...{
-        email: null,
+        email: "",
         error: "internal error",
         loading: false,
       },
@@ -41,3 +42,4 @@ export default function authEmail(state = initialState, action){
     return state;
   }
 }
+

@@ -1,24 +1,44 @@
 import {
-  SUBMIT_PASSWORD,
-  ENTER_PASSWORD,
-  PAGE_LOADED
-} from '../constants/ActionTypes'
+  VALIDATE_PASSWORD, VALIDATE_PASSWORD_SUCCESS, VALIDATE_PASSWORD_FAIL
+} from '../actions/login'
 
 const initialState = {
-  password: "",
-  error: false,
-  loading: false
+  token: "",
+  loading: false,
+  error: "",
 }
 
 export default function authPassword(state = initialState, action){
   switch (action.type) {
-    case SUBMIT_PASSWORD:
-      return Object.assign({}, state, {error: action.payload, loading: true})
-  	case ENTER_PASSWORD:
-      return Object.assign({}, state, {password: action.payload.password, error:false})
-    case PAGE_LOADED:
-      return Object.assign({}, state, {loading: action.payload})
+    case VALIDATE_PASSWORD:
+      return {
+        ...state,
+        ...{
+          token: "",
+          error: "",
+          loading: true,
+        },
+      };
+    case VALIDATE_PASSWORD_SUCCESS:
+    return {
+      ...state,
+      ...{
+        token: action.payload,
+        error: "",
+        loading: false,
+      },
+    };
+    case VALIDATE_PASSWORD_FAIL:
+    return {
+      ...state,
+      ...{
+        token: "",
+        error: "internal error",
+        loading: false,
+      },
+    };
     default:
-      return Object.assign({}, state)
+    return state;
   }
 }
+

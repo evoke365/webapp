@@ -31,6 +31,10 @@ hr {
   color: rgb(0, 0, 0);
 }
 
+.text-email {
+  text-align: center
+}
+
 .step-1 .container-email-and-button {
   margin-top: 50px;
 }
