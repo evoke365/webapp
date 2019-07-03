@@ -10,12 +10,15 @@ const INVALID_EMAIL_ERROR = "Let’s try that again, the email address you have 
 const EMAIL_NOT_FOUND_ERROR = "The email you have entered has not been registered."
 const INVALID_PASSWORD_ERROR = "Whoops... the password you have entered is incorrect or invalid."
 
+const VIEW_EMAIL = 0;
+const VIEW_PASSWORD = 1;
+
 class Login extends Component{
   state = {
     email: "",
     password: "",
     error: "",
-    emailValid: false,
+    view: VIEW_EMAIL,
   }
   componentDidMount() {
     if(loadState()) {
@@ -25,30 +28,33 @@ class Login extends Component{
     }
   }
   componentDidUpdate() {
-    if (this.state.emailValid === false) {
-      if (this.props.store.authEmail.email !== "") {
+    if (this.state.view === VIEW_EMAIL) {
+      const { email, error } = this.props.store.authEmail;
+      if (email !== "") {
         this.setState({
           email: "",
           password: "",
           error: "",
-          emailValid: true,
+          view: VIEW_PASSWORD,
         })
       }
-      if (this.props.store.authEmail.error !== "" && this.state.error === "") {
+      if (error !== "" && this.state.error === "") {
         this.setState({
-          email: this.state.email,
           error: EMAIL_NOT_FOUND_ERROR,
         })
       }
-    } else {
-      if (this.props.store.authPassword.token !== "") {
+    }
+    if (this.state.view === VIEW_PASSWORD) {
+      console.log(this.props.store)
+      const { token, error } = this.props.store.authPassword;
+      if (token !== "") {
         saveState({
-          "email":this.props.store.authEmail.email,
-          "token":this.props.store.authPassword.token
+          "email": this.props.store.authEmail.email,
+          "token": token
         });
         this.props.history.push("/home");
       }
-      if (this.props.store.authPassword.error !=="" && this.state.error === "") {
+      if (error !=="" && this.state.error === "") {
         this.setState({
           error: INVALID_PASSWORD_ERROR,
         })
@@ -71,7 +77,8 @@ class Login extends Component{
         error: INVALID_PASSWORD_ERROR,
       })
     }
-    this.props.submitPassword(this.state.email);
+    const { email } = this.props.store.authEmail;
+    this.props.submitPassword(email, this.state.password);
   }
   getEmailView(){
     return (
@@ -92,9 +99,10 @@ class Login extends Component{
     );
   }
   getPasswordView(){
+    const { email } = this.props.store.authEmail;
     return (
       <PasswordContainer
-        email={this.props.store.authEmail.email}
+        email={email}
         onKeyDown={(e)=>{
           if(e.keyCode === 13){
               this.onSubmitPassword();
@@ -105,7 +113,7 @@ class Login extends Component{
               password: e.target.value,
               error: "",
         })}}
-        onSubmit={this.onSubmitPassword()}
+        onSubmit={(e) => this.onSubmitPassword()}
         error={this.state.error}
         loading={this.props.store.authPassword.loading}
       />
@@ -113,15 +121,11 @@ class Login extends Component{
   }
   render() {
     console.log(this.props);
-    const { emailValid } = this.state;
+    const { view } = this.state;
     return (
       <div className="step-1">
         <p className="text-header">studybox.io</p>
-        {emailValid === false ? (
-          this.getEmailView()
-        ) : (
-          this.getPasswordView()
-        )}
+        {view === VIEW_PASSWORD ? this.getPasswordView() : this.getEmailView()}
       </div>
     )
   }

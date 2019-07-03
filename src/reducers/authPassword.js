@@ -23,7 +23,7 @@ export default function authPassword(state = initialState, action){
     return {
       ...state,
       ...{
-        token: action.payload,
+        token: action.payload.token,
         error: "",
         loading: false,
       },
