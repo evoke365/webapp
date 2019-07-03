@@ -1,8 +1,3 @@
-/*AUTHENTICATION-------------------------------------*/
-export const SUBMIT_EMAIL	= 'SUBMIT_EMAIL'
-export const SUBMIT_PASSWORD = 'SUBMIT_PASSWORD'
-export const ENTER_PASSWORD = 'ENTER_PASSWORD'
-
 /*HOME-----------------------------------------------*/
 export const SUBMIT_NOTE = 'SUBMIT_NOTE'
 export const GET_NOTES = 'GET_NOTES'

@@ -1,5 +1,5 @@
 import {
-	POST_USER,
+	POST_USER, VERIFY_USER
 } from '../config'
 
 export const SIGNUP = 'SIGNUP';
@@ -16,6 +16,25 @@ export function submitForm(email, password){
                 data: {
                   email: email,
                   password: password,
+                }
+			},
+		},
+	}
+}
+
+export const VERIFY_CODE = 'VERIFY_CODE';
+export const VERIFY_CODE_SUCCESS = 'VERIFY_CODE_SUCCESS';
+export const VERIFY_CODE_FAIL = 'VERIFY_CODE_FAIL';
+
+export function submitCode(code){
+	return {
+		types: [VERIFY_CODE, VERIFY_CODE_SUCCESS, VERIFY_CODE_FAIL],
+		payload: {
+			request: {
+                url: VERIFY_USER,
+                method: 'POST',
+                data: {
+                  code: code,
                 }
 			},
 		},

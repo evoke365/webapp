@@ -5,9 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getNotes, submitNote, enterKeyword, enterAnswer, getNotebooks, setNotebook } from '../actions/home'
 import { loadState, clearState } from '../localStorage'
-import { setView } from '../actions/app'
 import { GET_NOTEBOOKS, GET_NOTES, POST_NOTE, PUT_NOTE } from '../config'
-import { ThreeBounce } from 'better-react-spinkit'
 import {slide as Menu} from 'react-burger-menu';
 
 var FontAwesome = require('react-fontawesome');
@@ -15,7 +13,7 @@ var FontAwesome = require('react-fontawesome');
 class Home extends Component{
   componentDidMount() {
       if(!loadState().email || !loadState().token){
-        this.props.setView("login");
+        this.props.history.push("/login");
       } else {
         // TODO: Should we combine multiple requests into one?
         fetch(GET_NOTEBOOKS+"/"+loadState().token)
@@ -162,7 +160,7 @@ class Home extends Component{
     })
   }
   onAddNotebook(){
-    this.props.setView("confirmation-add-notebook");
+    //this.props.setView("confirmation-add-notebook");
   }
   onMoveNote(notebook, note, index){
     fetch(PUT_NOTE, {
@@ -205,7 +203,7 @@ class Home extends Component{
             <button tabIndex="-1" className="_button btn-logout"  
             onClick={(e)=>{
               clearState();
-              this.props.setView("login");
+              this.props.history.push("/login");
             }}>&nbsp;<FontAwesome name="sign-out"/> </button>
           </div>
           <div className="container-booklets">
@@ -230,7 +228,7 @@ class Home extends Component{
             <button tabIndex="-1" className="_button btn-logout"  
             onClick={(e)=>{
               clearState();
-              this.props.setView("login");
+              this.props.history.push("/login");
             }}>&nbsp;<FontAwesome name="sign-out"/> </button>
           </div>
           <div className="container-booklets">
@@ -250,7 +248,7 @@ class Home extends Component{
         </div>
         <div className="container-b">
           <div className="container-b-wrap" ref="noteList">
-          {loaded ? "" : <div className="loading-image"><ThreeBounce size={30} color="#FBA73B"/></div>}
+          {loaded ? "" : <div className="loading-image">Loading...</div>}
           <ReactCSSTransitionGroup transitionName="animated"
           transitionAppear={true}
           transitionLeave={fadeout}
@@ -349,7 +347,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ setView, getNotes, submitNote, enterKeyword, enterAnswer, getNotebooks, setNotebook }, dispatch))
+  return Object.assign({}, bindActionCreators({ getNotes, submitNote, enterKeyword, enterAnswer, getNotebooks, setNotebook }, dispatch))
 }
 
 export default connect(
