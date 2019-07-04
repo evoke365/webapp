@@ -15,27 +15,30 @@ export default function verifyUser(state = initialState, action){
       return {
         ...state,
         ...{
-          response: null,
-          error: null,
+          email: "",
+          token: "",
           loading: true,
+          error: "",
         },
       };
     case VERIFY_CODE_SUCCESS:
       return {
         ...state,
         ...{
-        response: action.payload,
-        error: null,
-        loading: false,
+          email: action.payload.email,
+          token: action.payload.token,
+          loading: false,
+          error: "",
         },
       };
     case VERIFY_CODE_FAIL:
       return {
         ...state,
         ...{
-        response: null,
-        error: "internal error",
+        email: "",
+        token: "",
         loading: false,
+        error: "internal error",
         },
       };
     default:

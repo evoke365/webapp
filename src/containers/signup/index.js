@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { submitForm } from '../../actions/signup'
+import { submitForm, submitCode } from '../../actions/signup'
 import { loadState, saveState } from '../../localStorage'
 import FormContainer from './form'
 import VerifyContainer from './verify'
@@ -18,6 +18,7 @@ class Signup extends Component{
     email: "",
     password: "",
     error: "",
+    code: "",
     view: VIEW_FORM,
   }
   componentDidMount() {
@@ -29,12 +30,11 @@ class Signup extends Component{
     }
   }
   componentDidUpdate() {
-    console.log(this.props);
     if(this.state.view === VIEW_FORM){
       const { response, error } = this.props.store.newSignup;
       if (response !== null) {
         this.setState({
-          email: "",
+          email: this.state.email,
           password: "",
           error: "",
           view: VIEW_CODE,
@@ -50,17 +50,19 @@ class Signup extends Component{
     }
     if(this.state.view === VIEW_CODE){
       const { email, token, error } = this.props.store.verifyUser;
-      if(email === "" || token === "" || error !== "") {
+      if(error !== "" && this.state.error === "") {
         this.setState({
           error: INVALID_CODE_ERROR,
         })
         return undefined;
       }
-      saveState({
-        "email": this.props.store.authEmail.email,
-        "token": token
-      });
-      this.props.history.push("/home");
+      if( email !== "" || token !=="" ){
+        saveState({
+          "email": this.props.store.authEmail.email,
+          "token": token
+        });
+        this.props.history.push("/home");
+      }
     }
   }
   onSubmitForm(){
@@ -79,21 +81,26 @@ class Signup extends Component{
       })
       return undefined;
     }
-    submitForm(email, password);
+    this.props.submitForm(email, password);
   }
-  onSubmitCode(code){
+  onSubmitCode(){
+    const { email, code } = this.state;
     if (code === "") {
       this.setState({
         error: INVALID_CODE_ERROR,
       })
       return undefined;
     }
-    this.props.submitCode(code);
+    this.props.submitCode(email, code);
   }
   getFormView(){
     return (
       <FormContainer 
-        onKeyDown={(e)=>{this.onSubmitForm()}}
+        onKeyDown={(e)=>{
+          if(e.keyCode === 13){
+            this.submitForm();
+          }
+        }}
         onTypingEmail={(e)=>{
           this.setState({
               email: e.target.value,
@@ -111,9 +118,14 @@ class Signup extends Component{
   getCodeView(){
     return (
       <VerifyContainer
-        onKeyDown={(e)=>{this.onSubmitCode(e.target.value)}}
+        onKeyDown={(e)=>{
+          if(e.keyCode === 13){
+            this.submitCode();
+          }
+        }}
         onChange={(e)=>{
           this.setState({
+            code: e.target.value,
             error: "",
           })
         }}
@@ -142,7 +154,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ submitForm }, dispatch))
+  return Object.assign({}, bindActionCreators({ submitForm, submitCode }, dispatch))
 }
 
 export default connect(

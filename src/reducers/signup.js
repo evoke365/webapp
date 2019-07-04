@@ -15,7 +15,7 @@ import {
           ...state,
           ...{
             response: null,
-            error: null,
+            error: "",
             loading: true,
           },
         };
@@ -24,7 +24,7 @@ import {
         ...state,
         ...{
         response: action.payload,
-        error: null,
+        error: "",
         loading: false,
         },
       };
