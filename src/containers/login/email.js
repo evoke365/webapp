@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const EmailContainer = ({onKeyDown, onChange, onNext, error}) => (
     <div className="container-email-and-button clearfix">
+          <p>Enter your email to sign up or sign in:</p>
           <input className={"_input"+(error === "" ? "" : " incorrect-input")} type="text" placeholder="Your email address" title="Use an email that is accessable on your mobile device."
           onKeyDown={onKeyDown} 
           onChange={onChange} />
