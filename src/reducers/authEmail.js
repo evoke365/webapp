@@ -3,7 +3,7 @@ import {
 } from '../actions/login'
 
 const initialState = {
-  email: "",
+  found: null,
   loading: false,
   error: "",
 }
@@ -14,17 +14,16 @@ export default function authEmail(state = initialState, action){
       return {
         ...state,
         ...{
-          email: "",
+          found: null,
           error: "",
           loading: true,
         },
       };
     case VALIDATE_EMAIL_SUCCESS:
-      console.log("here");
     return {
       ...state,
       ...{
-        email: action.payload,
+        found: action.payload,
         error: "",
         loading: false,
       },
@@ -33,7 +32,7 @@ export default function authEmail(state = initialState, action){
     return {
       ...state,
       ...{
-        email: "",
+        found: null,
         error: "internal error",
         loading: false,
       },

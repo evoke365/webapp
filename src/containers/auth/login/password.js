@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-const PasswordContainer = ({email, onKeyDown, onChange, onSubmit, error, loading}) => (
+const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
   <div>
-    <p className="text-email">Welcome back, {email}</p>
     <input 
       onChange={onChange}        
       onKeyDown={onKeyDown}
@@ -21,7 +20,6 @@ const PasswordContainer = ({email, onKeyDown, onChange, onSubmit, error, loading
 );
 
 PasswordContainer.propTypes = {
-  email: PropTypes.string.isRequired,
   onKeyDown: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
