@@ -24,7 +24,7 @@ class SignupContainer extends Component{
     })
   }
   componentDidUpdate() {
-    const { success } = this.props.store.submitPassword;
+    const { success } = this.props.store.newSignup;
     switch(success) {
       case 1:
         // redirect to verify
@@ -62,7 +62,7 @@ class SignupContainer extends Component{
         })}}
         onSubmit={() => this.onSubmit()}
         error={this.state.error}
-        loading={this.props.store.authPassword.loading}
+        loading={this.props.store.newSignup.loading}
       />
     );
   }

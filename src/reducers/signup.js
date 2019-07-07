@@ -14,7 +14,7 @@ import {
         return {
           ...state,
           ...{
-            response: null,
+            success: null,
             error: "",
             loading: true,
           },
@@ -23,7 +23,7 @@ import {
       return {
         ...state,
         ...{
-        response: action.payload,
+        success: action.payload,
         error: "",
         loading: false,
         },
@@ -32,7 +32,7 @@ import {
       return {
         ...state,
         ...{
-        response: null,
+        success: null,
         error: "internal error",
         loading: false,
         },
