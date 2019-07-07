@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-const VerifyContainer = ({onKeyDown, onChange, onNext, error}) => (
+const CodeContainer = ({onKeyDown, onChange, onNext, error}) => (
   <div className="container-email-and-button clearfix">
     <input className={"_input"+(error === "" ? "" : " incorrect-input")} type="number" placeholder="Enter activation code" title="Enter the activation code in the email we have sent you"
     onKeyDown={onKeyDown} 
@@ -11,11 +11,11 @@ const VerifyContainer = ({onKeyDown, onChange, onNext, error}) => (
   </div>
 );
 
-VerifyContainer.propTypes = {
+CodeContainer.propTypes = {
   onKeyDown: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onNext: PropTypes.func.isRequired,
   error: PropTypes.string.isRequired,
 }
 
-export default VerifyContainer
+export default CodeContainer

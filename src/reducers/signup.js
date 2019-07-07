@@ -3,7 +3,7 @@ import {
   } from '../actions/signup'
   
   const initialState = {
-    response: null,
+    success: null,
     loading: false,
     error: "",
   }

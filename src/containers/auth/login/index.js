@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { submitPassword } from '../../../actions/login'
 import { loadState, saveState } from '../../../localStorage'
-import PasswordContainer from './password'
+import PasswordContainer from '../password'
 
 const INVALID_PASSWORD_ERROR = "Whoops... the password you have entered is incorrect or invalid."
 
@@ -14,22 +14,23 @@ class LoginContainer extends Component{
     error: "",
   }
   componentDidMount() {
-    if(!loadState("email")) {
+    let email = loadState("email");
+    if(typeof(email) === "undefined") {
       this.props.history.push("/");
       return undefined;
     }
     this.setState({
-      email: loadState("email"),
+      email: email,
     })
   }
   componentDidUpdate() {
-    const { token, error } = this.props.store.authPassword;
+    const { token } = this.props.store.authPassword;
     if (token !== "") {
       saveState("token", token);
       this.props.history.push("/home");
     }
   }
-  onSubmitPassword(){
+  onSubmit(){
     const { email, password } = this.state;
     // TODO: Add password validation
     if (password === "") {
@@ -46,7 +47,7 @@ class LoginContainer extends Component{
       <PasswordContainer
         onKeyDown={(e)=>{
           if(e.keyCode === 13){
-              this.onSubmitPassword();
+              this.onSubmit();
             }
         }}
         onChange={(e)=>{
@@ -54,7 +55,7 @@ class LoginContainer extends Component{
               password: e.target.value,
               error: "",
         })}}
-        onSubmit={() => this.onSubmitPassword()}
+        onSubmit={() => this.onSubmit()}
         error={this.state.error}
         loading={this.props.store.authPassword.loading}
       />

@@ -14,7 +14,7 @@ const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
     <button 
       className={loading ? "_button_disabled" : "_button"} 
       onClick={onSubmit} 
-      disabled={loading} >{loading ? "..." : "go to my notes!"}
+      disabled={loading} >{loading ? "..." : "next"}
     </button>
   </div>  
 );

@@ -6,7 +6,7 @@ export const SIGNUP = 'SIGNUP';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
-export function submitForm(email, password){
+export function submitPassword(email, password){
   return {
     types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL],
     payload: {

@@ -28,7 +28,7 @@ class AuthContainer extends Component{
         break; 
     }
   }
-  onSubmitEmail(){
+  onSubmit(){
     const { email } = this.state;
     if (email === "" || validateEmail(email) === false) {
       this.setState({
@@ -44,7 +44,7 @@ class AuthContainer extends Component{
       <EmailContainer 
         onKeyDown={(e)=>{
           if(e.keyCode === 13){
-              this.onSubmitEmail(e.target.value);
+              this.onSubmit(e.target.value);
             }
         }}
         onChange={(e)=>{
@@ -52,7 +52,7 @@ class AuthContainer extends Component{
               email: e.target.value,
               error: "",
         })}}
-        onNext={(e)=>{this.onSubmitEmail(e.target.value)}}
+        onNext={(e)=>{this.onSubmit(e.target.value)}}
         error={error} 
       />
     );
