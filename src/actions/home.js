@@ -1,12 +1,13 @@
 import {
 	SUBMIT_NOTE,
-	GET_NOTES,
 	GET_NOTEBOOKS,
 	SET_NOTEBOOK,
 	ENTER_KEYWORD,
 	ENTER_ANSWER,
 	PAGE_LOADED
 } from '../constants/ActionTypes'
+
+import { GET_NOTES_API } from '../config'
 
 export function submitNote(payload){
 	return {
@@ -15,10 +16,17 @@ export function submitNote(payload){
 	}
 }
 
-export function getNotes(payload){
+export const GET_NOTES = 'GET_NOTES';
+export const GET_NOTES_SUCCESS = 'GET_NOTES_SUCCESS';
+export const GET_NOTES_FAIL = 'GET_NOTES_FAIL';
+export function getNotes(userId){
 	return {
-		type: GET_NOTES,
-		payload
+		types: [GET_NOTES, GET_NOTES_SUCCESS, GET_NOTES_FAIL],
+		payload: {
+			request: {
+				url: GET_NOTES_API+"/"+userId,
+			},
+		},
 	}
 }
 

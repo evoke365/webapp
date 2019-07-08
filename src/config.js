@@ -1,4 +1,4 @@
-export const API = "http://localhost:8080"
+export const RESOURCE_API = "http://localhost:8080"
 export const AUTH_API = "http://localhost:8090"
 
 /* User */
@@ -8,10 +8,10 @@ export const POST_USER = AUTH_API + "/user/signup"
 export const VERIFY_USER = AUTH_API + "/user/verify"
 
 /* Notebook */
-export const GET_NOTEBOOKS = API + "/notebooks"
-export const POST_NOTEBOOK = API + "/notebook"
+export const GET_NOTEBOOKS = RESOURCE_API + "/notebooks"
+export const POST_NOTEBOOK = RESOURCE_API + "/notebook"
 
 /* Note */
-export const GET_NOTES = API + "/notes"
-export const POST_NOTE = API + "/note"
-export const PUT_NOTE = API + "/note/update"
+export const GET_NOTES_API = RESOURCE_API + "/notes"
+export const POST_NOTE = RESOURCE_API + "/note"
+export const PUT_NOTE = RESOURCE_API + "/note/update"

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import axios from 'axios';
 import axiosMiddleware from 'redux-axios-middleware';
 import AppRouter from './App';
-import { API } from './config'
+import { RESOURCE_API } from './config'
 import reducers from './reducers'
 import * as serviceWorker from './serviceWorker';
 
@@ -23,7 +23,7 @@ const options = {
 };
 
 const client = axios.create({
-  baseURL: API,
+  baseURL: RESOURCE_API,
   responseType: 'json',
 });
 

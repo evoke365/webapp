@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getNotes, submitNote, enterKeyword, enterAnswer, getNotebooks, setNotebook } from '../../actions/home'
 import { loadState, clearState } from '../../localStorage'
-import { GET_NOTEBOOKS, GET_NOTES, POST_NOTE, PUT_NOTE } from '../../config'
+import { POST_NOTE, PUT_NOTE } from '../../config'
 import {slide as Menu} from 'react-burger-menu';
 
 var FontAwesome = require('react-fontawesome');
@@ -18,68 +18,29 @@ class HomeContainer extends Component{
       this.props.history.push("/");
       return undefined;
     }
-    // TODO: Should we combine multiple requests into one?
-    fetch(GET_NOTEBOOKS+"/"+token)
-    .then(response => response.json())
-    .then(data => {
-      if(data.Success === true){
-      this.props.getNotebooks(data.Body.Message)
-      // Set notebook to the default one for now
-      // TODO: make dynamic notebook selection
-      if(this.props.store.home.notebookId === 0){
-          var defaultNotebook = this.props.store.home.notebooks[0];
-          this.props.setNotebook(defaultNotebook.Id)
-      }
-      fetch(GET_NOTES+"/"+token+"/"+this.props.store.home.notebookId)
-      .then(response => response.json())
-      .then(data => {
-        if(data.Success === true){
-          if(data.Body.Message !== null) {
-              this.props.getNotes(data.Body.Message);
-          }
-          else {
-            this.props.getNotes([]);
-          }
-        }
-        else{
-          console.log("Failed to fetch notebooks data or data is null");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        return undefined;
-      })
-      }
-      else{
-      console.log("Failed to fetch notebooks data");
-      }
-    })
-    .catch(err => {
-        console.log(err);
-        return undefined;
-    })
+    this.props.getNotes(token);
   }
   onImportantNote(note,index){
-    fetch(PUT_NOTE, {
-      method: 'POST',
-      body: JSON.stringify({"token":loadState("token"), "noteId":note.Id, "newData":{"important": (note.Important === true) ? false : true }})
-    })
-    .then(response => response.json())
-    .then(data => {
-      if(data.Success === true){
-        this.props.store.home.notes[index] = data.Body.Message;
-        this.props.updateNote(this.props.store.home.notes);
-        return false;
-      }
-      else{
-        console.log("failed to submit note");
-        return false;
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      return undefined;
-    })
+    // fetch(PUT_NOTE, {
+    //   method: 'POST',
+    //   body: JSON.stringify({"token":loadState("token"), "noteId":note.Id, "newData":{"important": (note.Important === true) ? false : true }})
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   if(data.Success === true){
+    //     this.props.store.home.notes[index] = data.Body.Message;
+    //     this.props.updateNote(this.props.store.home.notes);
+    //     return false;
+    //   }
+    //   else{
+    //     console.log("failed to submit note");
+    //     return false;
+    //   }
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    //   return undefined;
+    // })
   }
   onDeleteNote(note,index){
     fetch(PUT_NOTE, {
@@ -140,26 +101,6 @@ class HomeContainer extends Component{
     }
   }
   onSelectNotebook(notebook, index){
-    this.props.setNotebook(notebook.Id);
-    fetch(GET_NOTES+"/"+loadState().token+"/"+notebook.Id)
-    .then(response => response.json())
-    .then(data => {
-      if(data.Success === true){
-        if(data.Body.Message !== null) {
-          this.props.getNotes(data.Body.Message);
-        }
-        else {
-          this.props.getNotes([]);
-        }
-      }
-      else{
-        console.log("Failed to fetch notebooks data or data is null");
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      return undefined;
-    })
   }
   onAddNotebook(){
     //this.props.setView("confirmation-add-notebook");
@@ -187,15 +128,16 @@ class HomeContainer extends Component{
     })
   }
   render(){
+    console.log(this.props);
     var email = loadState("email");
     var keyword = this.props.store.home.keyword;
     var answer = this.props.store.home.answer;
     var notebookId = this.props.store.home.notebookId;
     var notes = this.props.store.home.notes;
-    var loaded = this.props.store.home.loaded;
     var notebooks = this.props.store.home.notebooks;
     var fadeout = this.props.store.home.fadeout;
 
+    const { loading } = this.props.store.note;
     return (
       <div>
         <Menu>
@@ -250,7 +192,7 @@ class HomeContainer extends Component{
         </div>
         <div className="container-b">
           <div className="container-b-wrap" ref="noteList">
-          {loaded ? "" : <div className="loading-image">Loading...</div>}
+          {loading ? <div className="loading-image">Loading...</div> : ""}
           <ReactCSSTransitionGroup transitionName="animated"
           transitionAppear={true}
           transitionLeave={fadeout}

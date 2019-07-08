@@ -1,6 +1,5 @@
 import {
   SUBMIT_NOTE,
-  GET_NOTES,
   GET_NOTEBOOKS,
   SET_NOTEBOOK,
   ENTER_KEYWORD,
@@ -10,7 +9,6 @@ import {
 const initialState = {
   notebooks:"",
   notebookId: 0,
-  notes: [],
   keyword: "",
   answer: "",
   loaded: false,
@@ -21,8 +19,6 @@ export default function home(state = initialState, action){
   switch (action.type) {
     case SUBMIT_NOTE:
       return Object.assign({}, state, {keyword: "", answer:""})
-    case GET_NOTES:
-      return Object.assign({}, state, {notes: action.payload})
     case GET_NOTEBOOKS:
       return Object.assign({}, state, {notebooks: action.payload})
     case SET_NOTEBOOK:
