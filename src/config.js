@@ -1,4 +1,4 @@
-export const API = "http://api.studybox.io:8080"
+export const API = "http://localhost:8080"
 export const AUTH_API = "http://localhost:8090"
 
 /* User */

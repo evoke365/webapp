@@ -72,7 +72,6 @@ class VerifyContainer extends Component{
     )
   }
   render() {
-    const { view } = this.state;
     return (
       <div className="step-1">
         <p className="text-header">studybox.io</p>

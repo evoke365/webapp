@@ -4,7 +4,7 @@ import AuthContainer from './containers/auth'
 import LoginContainer from './containers/auth/login';
 import SignupContainer from './containers/auth/signup';
 import VerifyContainer from './containers/auth/verify';
-import Home from './containers/Home';
+import HomeContainer from './containers/home';
 
 function AppRouter() {
   return (
@@ -13,7 +13,7 @@ function AppRouter() {
         <Route path="/signin" component={LoginContainer} />
         <Route path="/signup" component={SignupContainer} />
         <Route path="/verify" component={VerifyContainer} />
-        <Route path="/home" component={Home} />
+        <Route path="/home" component={HomeContainer} />
     </Router>
   );
 }
