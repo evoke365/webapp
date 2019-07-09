@@ -65,32 +65,17 @@ class HomeContainer extends Component{
     })
   }
   onSubmitNote(){
-    fetch(POST_NOTE, {
-      method: 'POST',
-      body: JSON.stringify({"token":loadState().token, 
-        "notebookId":this.props.store.home.notebookId, 
-        "keyword":this.props.store.home.keyword, 
-        "answer":this.props.store.home.answer})
-    })
-    .then(response => response.json())
-    .then(data => {
-      if(data.Success === true){
-        this.props.store.home.notes.push(data.Body.Message);
+    const { keyword, answer } = this.props.store.home;
+    if(keyword !== "" && answer !== "") {
+      this.props.submitNote(loadState("token"), keyword, answer);
+    }
+    /*
+    this.props.store.home.notes.push(data.Body.Message);
         this.props.submitNote(this.props.store.home.notes);
         var node = ReactDOM.findDOMNode(this.refs.noteList);
         node.scrollTop = node.scrollHeight;
         ReactDOM.findDOMNode(this.refs.keywordInput).focus(); 
-        return false;
-      }
-      else{
-        console.log("failed to submit note");
-        return false;
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      return undefined;
-    })
+        */
   }
   onKeySubmitNote(shifted, keyCode){
     if(this.props.store.home.keyword.length > 0 && 
