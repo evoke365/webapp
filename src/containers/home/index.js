@@ -85,44 +85,14 @@ class HomeContainer extends Component{
       }
     }
   }
-  onSelectNotebook(notebook, index){
-  }
-  onAddNotebook(){
-    //this.props.setView("confirmation-add-notebook");
-  }
-  onMoveNote(notebook, note, index){
-    fetch(PUT_NOTE, {
-      method: 'POST',
-      body: JSON.stringify({"token":loadState().token, "noteId":note.Id, "newData":{"notebookId": notebook.Id }})
-    })
-    .then(response => response.json())
-    .then(data => {
-      if(data.Success === true){
-        this.props.store.home.notes.splice(index, 1);
-        this.props.updateNote(this.props.store.home.notes);
-        return false;
-      }
-      else{
-        console.log("failed to submit note");
-        return false;
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      return undefined;
-    })
-  }
   render(){
     console.log(this.props);
     var email = loadState("email");
     var keyword = this.props.store.home.keyword;
     var answer = this.props.store.home.answer;
-    var notebookId = this.props.store.home.notebookId;
-    var notes = this.props.store.home.notes;
-    var notebooks = this.props.store.home.notebooks;
     var fadeout = this.props.store.home.fadeout;
 
-    const { loading } = this.props.store.note;
+    const { loading, notes } = this.props.store.note;
     return (
       <div>
         <Menu>
@@ -135,20 +105,6 @@ class HomeContainer extends Component{
               this.props.history.push("/");
             }}>&nbsp;<FontAwesome name="sign-out"/> </button>
           </div>
-          <div className="container-booklets">
-            <div className="booklet-title">
-              <FontAwesome name="book"/> My booklet 
-              <button tabIndex="-1" className="btn-booklet-add" onClick={(e)=>{this.onAddNotebook()}}><FontAwesome name="plus"/></button>
-            </div>
-
-          {Array.isArray(notebooks) ? notebooks.map((notebook, index) => {
-            return(
-              <div className={getNotebookClassName(notebookId, notebook.Id)} key={notebook.Id}>
-                <FontAwesome name="sticky-note-o"/> <button tabIndex="-1" className="home-booklets-booklet" onClick={(e) => {this.onSelectNotebook(notebook, index)}}>{notebook.Name}</button>
-              </div>
-            )
-          }) : null}
-          </div>
         </Menu>
         <div className="container-a">
           <p className="text-title" >studybox.io</p>
@@ -159,20 +115,6 @@ class HomeContainer extends Component{
               clearState();
               this.props.history.push("/login");
             }}>&nbsp;<FontAwesome name="sign-out"/> </button>
-          </div>
-          <div className="container-booklets">
-            <div className="booklet-title">
-              <FontAwesome name="book"/> My booklet 
-              <button tabIndex="-1" className="btn-booklet-add" onClick={(e)=>{this.onAddNotebook()}}><FontAwesome name="plus"/></button>
-            </div>
-
-          {Array.isArray(notebooks) ? notebooks.map((notebook, index) => {
-            return(
-              <div className={getNotebookClassName(notebookId, notebook.Id)} key={notebook.Id}>
-                <FontAwesome name="sticky-note-o"/> <button tabIndex="-1" className="home-booklets-booklet" onClick={(e) => {this.onSelectNotebook(notebook, index)}}>{notebook.Name}</button>
-              </div>
-            )
-          }) : null}
           </div>
         </div>
         <div className="container-b">
@@ -201,22 +143,6 @@ class HomeContainer extends Component{
                 </div>
               </div>
               <div className="btn-panel-hidden">
-                    <div className="dropdown">
-                      <button tabIndex="-1" className="_button btn-panel-button notebook-btn"><FontAwesome name="book"/></button>
-                      <div className={(index === 0 || index === 1) ? 'dropdown-content slidedown' : 'dropdown-content slideup'}>
-                      {Array.isArray(notebooks) ? notebooks.map((nb, i) => {
-                        if(nb.Id === note.NotebookId) {
-                          return(
-                            <div key={nb.Id} className="notebook-current">{nb.Name}</div>
-                          )
-                        } else {
-                          return(
-                            <a key={nb.Id} onClick={(e)=>this.onMoveNote(nb, note, index)}>{nb.Name}</a>
-                          )
-                        }
-                      }) : null}
-                    </div>
-                </div>
                 <button tabIndex="-1" className="_button btn-panel-button" onClick={(e)=>{this.onDeleteNote(note,index)}}><FontAwesome name="trash-o"/></button>
               </div>
             </div>
@@ -255,13 +181,6 @@ class HomeContainer extends Component{
       </div>
     )
   }
-}
-
-function getNotebookClassName(selected, index){
-  if(selected === index){
-    return "home-booklets home-booklets-selected";
-  }
-  return "home-booklets";
 }
 
 function getButtonClassName(keyword, answer){
