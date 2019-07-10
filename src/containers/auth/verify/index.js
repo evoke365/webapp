@@ -28,17 +28,14 @@ class VerifyContainer extends Component{
   componentDidUpdate() {
     const { email, token, error } = this.props.store.verifyUser;
     if(error !== "" && this.state.error === "") {
-    this.setState({
-        error: INVALID_CODE_ERROR,
-    })
-    return undefined;
+      this.setState({
+          error: INVALID_CODE_ERROR,
+      })
+      return undefined;
     }
     if( email !== "" || token !=="" ){
-    saveState({
-        "email": this.props.store.authEmail.email,
-        "token": token
-    });
-    this.props.history.push("/home");
+      saveState("token", token);
+      this.props.history.push("/home");
     }
 }
   

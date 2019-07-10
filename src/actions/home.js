@@ -10,6 +10,7 @@ import { GET_NOTES_API, POST_NOTE_API } from '../config'
 export const SUBMIT_NOTE = 'SUBMIT_NOTE';
 export const SUBMIT_NOTE_SUCCESS = 'SUBMIT_NOTE_SUCCESS';
 export const SUBMIT_NOTE_FAIL = 'SUBMIT_NOTE_FAIL';
+
 export function submitNote(token, title, body){
 	return {
 		type: [SUBMIT_NOTE, SUBMIT_NOTE_SUCCESS, SUBMIT_NOTE_FAIL],
@@ -23,7 +24,7 @@ export function submitNote(token, title, body){
 					body: body,
 				}
 			},
-		}
+		},
 	}
 }
 

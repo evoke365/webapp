@@ -1,5 +1,6 @@
 import {
     GET_NOTES, GET_NOTES_SUCCESS, GET_NOTES_FAIL,
+    SUBMIT_NOTE, SUBMIT_NOTE_SUCCESS, SUBMIT_NOTE_FAIL
   } from '../actions/home'
   
   const initialState = {
@@ -14,7 +15,7 @@ import {
         return {
           ...state,
           ...{
-            notes: [],
+            notes: state.notes,
             error: "",
             loading: true,
           },
@@ -23,7 +24,7 @@ import {
       return {
         ...state,
         ...{
-            notes: action.payload,
+          notes: action.payload,
           error: "",
           loading: false,
         },
@@ -32,7 +33,34 @@ import {
       return {
         ...state,
         ...{
-            notes: null,
+          notes: state.notes,
+          error: "internal error",
+          loading: false,
+        },
+      };
+      case SUBMIT_NOTE:
+        return {
+          ...state,
+          ...{
+            notes: state.notes,
+            error: "",
+            loading: true,
+          },
+        };
+      case SUBMIT_NOTE_SUCCESS:
+      return {
+        ...state,
+        ...{
+          notes: state.notes.push(action.payload),
+          error: "",
+          loading: false,
+        },
+      };
+      case SUBMIT_NOTE_FAIL:
+      return {
+        ...state,
+        ...{
+          notes: state.notes,
           error: "internal error",
           loading: false,
         },

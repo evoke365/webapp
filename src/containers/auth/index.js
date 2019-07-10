@@ -17,6 +17,7 @@ class AuthContainer extends Component{
     switch(found) {
       case 0:
         // redirect to sign up
+        saveState("email", this.state.email)
         this.props.history.push("/signup");
         break;
       case 1:
@@ -44,7 +45,7 @@ class AuthContainer extends Component{
       <EmailContainer 
         onKeyDown={(e)=>{
           if(e.keyCode === 13){
-              this.onSubmit(e.target.value);
+              this.onSubmit();
             }
         }}
         onChange={(e)=>{
@@ -52,7 +53,7 @@ class AuthContainer extends Component{
               email: e.target.value,
               error: "",
         })}}
-        onNext={(e)=>{this.onSubmit(e.target.value)}}
+        onNext={(e)=>{this.onSubmit()}}
         error={error} 
       />
     );
