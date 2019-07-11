@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getNotes, submitNote, enterKeyword, enterAnswer, getNotebooks, setNotebook } from '../../actions/home'
+import { getNotes, submitNote, deleteNote, getNotebooks, setNotebook } from '../../actions/home'
 import { loadState, clearState } from '../../localStorage'
 import { PUT_NOTE } from '../../config'
 import {slide as Menu} from 'react-burger-menu';
@@ -51,27 +51,10 @@ class HomeContainer extends Component{
     //   return undefined;
     // })
   }
-  onDeleteNote(note,index){
-    fetch(PUT_NOTE, {
-      method: 'POST',
-      body: JSON.stringify({"token":loadState().token, "noteId":note.Id, "newData":{"deleted": true }})
-    })
-    .then(response => response.json())
-    .then(data => {
-      if(data.Success === true){
-        this.props.store.home.notes.splice(index, 1);
-        this.props.updateNote(this.props.store.home.notes);
-        return false;
-      }
-      else{
-        console.log("failed to submit note");
-        return false;
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      return undefined;
-    })
+  onDeleteNote(noteId, index){
+    let token = loadState("token");
+    let email = loadState("email");
+    this.props.deleteNote(token, noteId);
   }
   onSubmitNote(){
     const { keyword, answer } = this.state;
@@ -148,7 +131,7 @@ class HomeContainer extends Component{
                 </div>
               </div>
               <div className="btn-panel-hidden">
-                <button tabIndex="-1" className="_button btn-panel-button" onClick={(e)=>{this.onDeleteNote(note,index)}}><FontAwesome name="trash-o"/></button>
+                <button tabIndex="-1" className="_button btn-panel-button" onClick={(e)=>{this.onDeleteNote(note.Id,index)}}><FontAwesome name="trash-o"/></button>
               </div>
             </div>
             <hr/></div>)
@@ -204,7 +187,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ getNotes, submitNote, enterKeyword, enterAnswer, getNotebooks, setNotebook }, dispatch))
+  return Object.assign({}, bindActionCreators({ getNotes, submitNote, deleteNote, getNotebooks, setNotebook }, dispatch))
 }
 
 export default connect(

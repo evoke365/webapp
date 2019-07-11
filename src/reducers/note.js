@@ -1,6 +1,7 @@
 import {
     GET_NOTES, GET_NOTES_SUCCESS, GET_NOTES_FAIL,
     SUBMIT_NOTE, SUBMIT_NOTE_SUCCESS, SUBMIT_NOTE_FAIL,
+    DELETE_NOTE, DELETE_NOTE_SUCCESS, DELETE_NOTE_FAIL,
   } from '../actions/home'
   
 const initialState = {
@@ -10,8 +11,7 @@ const initialState = {
 }
 
 export default function note(state = initialState, action) {
-  console.log(state);
-  console.log(action);
+  console.log(action)
   switch (action.type) {
     case GET_NOTES:
       return {
@@ -60,6 +60,33 @@ export default function note(state = initialState, action) {
       },
     };
     case SUBMIT_NOTE_FAIL:
+    return {
+      ...state,
+      ...{
+        notes: state.notes,
+        error: "internal error",
+        loading: false,
+      },
+    };
+    case DELETE_NOTE:
+    return {
+      ...state,
+      ...{
+        notes: state.notes,
+        error: "",
+        loading: true,
+      },
+    };
+    case DELETE_NOTE_SUCCESS:
+    return {
+      ...state,
+      ...{
+        notes: state.notes,
+        error: "",
+        loading: false,
+      },
+    };
+    case DELETE_NOTE_FAIL:
     return {
       ...state,
       ...{

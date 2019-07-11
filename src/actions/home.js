@@ -1,11 +1,9 @@
 import {
 	GET_NOTEBOOKS,
 	SET_NOTEBOOK,
-	ENTER_KEYWORD,
-	ENTER_ANSWER,
 	PAGE_LOADED
 } from '../constants/ActionTypes'
-import { GET_NOTES_API, POST_NOTE_API } from '../config'
+import { GET_NOTES_API, POST_NOTE_API, DELETE_NOTE_API } from '../config'
 
 export const SUBMIT_NOTE = 'SUBMIT_NOTE';
 export const SUBMIT_NOTE_SUCCESS = 'SUBMIT_NOTE_SUCCESS';
@@ -41,17 +39,22 @@ export function getNotes(userId){
 	}
 }
 
-export function enterKeyword(payload){
-		return {
-		type: ENTER_KEYWORD,
-		payload
-	}
-}
-
-export function enterAnswer(payload){
-		return {
-		type: ENTER_ANSWER,
-		payload
+export const DELETE_NOTE = 'DELETE_NOTE';
+export const DELETE_NOTE_SUCCESS = 'DELETE_NOTE_SUCCESS';
+export const DELETE_NOTE_FAIL = 'DELETE_NOTE_FAIL';
+export function deleteNote(token, noteId) {
+	return {
+		type: DELETE_NOTE,
+		payload: {
+			request: {
+				url: DELETE_NOTE_API,
+				method: 'DELETE',
+				data: {
+					token: token,
+          noteId: noteId,
+				}
+			},
+		},
 	}
 }
 
