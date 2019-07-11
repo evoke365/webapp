@@ -5,12 +5,16 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getNotes, submitNote, enterKeyword, enterAnswer, getNotebooks, setNotebook } from '../../actions/home'
 import { loadState, clearState } from '../../localStorage'
-import { POST_NOTE, PUT_NOTE } from '../../config'
+import { PUT_NOTE } from '../../config'
 import {slide as Menu} from 'react-burger-menu';
 
 var FontAwesome = require('react-fontawesome');
 
 class HomeContainer extends Component{
+  state = {
+    keyword: "",
+    answer: "",
+  }
   componentDidMount() {
     let email = loadState("email");
     let token = loadState("token");
@@ -19,6 +23,11 @@ class HomeContainer extends Component{
       return undefined;
     }
     this.props.getNotes(token);
+    this.setState({
+      notes: this.props.store.note.notes
+    })
+  }
+  componentDidUpdate() {
   }
   onImportantNote(note,index){
     // fetch(PUT_NOTE, {
@@ -65,21 +74,19 @@ class HomeContainer extends Component{
     })
   }
   onSubmitNote(){
-    const { keyword, answer } = this.props.store.home;
+    const { keyword, answer } = this.state;
     if(keyword !== "" && answer !== "") {
       this.props.submitNote(loadState("token"), keyword, answer);
     }
     /*
-    this.props.store.home.notes.push(data.Body.Message);
-        this.props.submitNote(this.props.store.home.notes);
-        var node = ReactDOM.findDOMNode(this.refs.noteList);
-        node.scrollTop = node.scrollHeight;
-        ReactDOM.findDOMNode(this.refs.keywordInput).focus(); 
-        */
+    var node = ReactDOM.findDOMNode(this.refs.noteList);
+    node.scrollTop = node.scrollHeight;
+    ReactDOM.findDOMNode(this.refs.keywordInput).focus(); 
+    */
   }
   onKeySubmitNote(shifted, keyCode){
-    if(this.props.store.home.keyword.length > 0 && 
-      this.props.store.home.answer.length > 0){
+    const { keyword, answer } = this.state;
+    if(keyword.length > 0 && answer.length > 0){
       if(keyCode === 13 && shifted){
         this.onSubmitNote();
       }
@@ -88,11 +95,9 @@ class HomeContainer extends Component{
   render(){
     console.log(this.props);
     var email = loadState("email");
-    var keyword = this.props.store.home.keyword;
-    var answer = this.props.store.home.answer;
     var fadeout = this.props.store.home.fadeout;
-
-    const { loading, notes } = this.props.store.note;
+    const { keyword, answer } = this.state;
+    const { notes, loading } = this.props.store.note;
     return (
       <div>
         <Menu>
@@ -152,7 +157,9 @@ class HomeContainer extends Component{
           </div>
         </div>
         <div className="container-c">
-          <textarea onChange={(e)=>{this.props.enterKeyword(e.target.value)}} 
+          <textarea onChange={(e)=>{
+            this.setState({"keyword": e.target.value})
+          }} 
           tabIndex="0" 
           className="question" 
           value={keyword} 
@@ -162,7 +169,9 @@ class HomeContainer extends Component{
             }}}  
           placeholder="keyword / question" title="Press [tab] to move to the next textbox." ref="keywordInput">
           </textarea>
-          <textarea onChange={(e)=>{this.props.enterAnswer(e.target.value)}} 
+          <textarea onChange={(e)=>{
+            this.setState({"answer": e.target.value})
+          }} 
           tabIndex="0" 
           className="answer" 
           value={answer} 
