@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getNotes, submitNote, deleteNote, getNotebooks, setNotebook } from '../../actions/home'
 import { loadState, clearState } from '../../localStorage'
-import { PUT_NOTE } from '../../config'
 import NoteContainer from './note'
 import {slide as Menu} from 'react-burger-menu';
 
@@ -29,6 +28,12 @@ class HomeContainer extends Component{
     })
   }
   componentDidUpdate() {
+  }
+  resetState() {
+    this.setState({
+      keyword: "",
+      answer: "",
+    })
   }
   onImportantNote(note,index){
     // fetch(PUT_NOTE, {
@@ -54,7 +59,6 @@ class HomeContainer extends Component{
   }
   onDeleteNote(noteId, index){
     let token = loadState("token");
-    let email = loadState("email");
     this.props.deleteNote(token, noteId);
   }
   onSubmitNote(){
@@ -62,11 +66,11 @@ class HomeContainer extends Component{
     if(keyword !== "" && answer !== "") {
       this.props.submitNote(loadState("token"), keyword, answer);
     }
-    /*
     var node = ReactDOM.findDOMNode(this.refs.noteList);
     node.scrollTop = node.scrollHeight;
     ReactDOM.findDOMNode(this.refs.keywordInput).focus(); 
-    */
+
+    this.resetState();
   }
   onKeySubmitNote(shifted, keyCode){
     const { keyword, answer } = this.state;
