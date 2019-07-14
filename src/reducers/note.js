@@ -11,7 +11,6 @@ const initialState = {
 }
 
 export default function note(state = initialState, action) {
-  console.log(action)
   switch (action.type) {
     case GET_NOTES:
       return {

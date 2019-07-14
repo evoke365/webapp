@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getNotes, submitNote, deleteNote, getNotebooks, setNotebook } from '../../actions/home'
+import { getNotes, submitNote, deleteNote } from '../../actions/home'
 import { loadState, clearState } from '../../localStorage'
 import NoteContainer from './note'
 import {slide as Menu} from 'react-burger-menu';
@@ -14,6 +14,7 @@ class HomeContainer extends Component{
   state = {
     keyword: "",
     answer: "",
+    loadingNote: false,
   }
   componentDidMount() {
     let email = loadState("email");
@@ -28,11 +29,28 @@ class HomeContainer extends Component{
     })
   }
   componentDidUpdate() {
+    const { loading } = this.props.store.note;
+    const { loadingNote } = this.state;
+    if(loading !== loadingNote) {
+      // new note added, reset state
+      if(loading === false) {
+        this.resetState();
+        return undefined
+      }
+      this.setState({
+        loadingNote : loading,
+      })
+    }
   }
   resetState() {
+    var node = ReactDOM.findDOMNode(this.refs.noteList);
+    node.scrollTop = node.scrollHeight;
+    ReactDOM.findDOMNode(this.refs.keywordInput).focus(); 
+
     this.setState({
       keyword: "",
       answer: "",
+      loadingNote: false,
     })
   }
   onImportantNote(note,index){
@@ -66,11 +84,6 @@ class HomeContainer extends Component{
     if(keyword !== "" && answer !== "") {
       this.props.submitNote(loadState("token"), keyword, answer);
     }
-    var node = ReactDOM.findDOMNode(this.refs.noteList);
-    node.scrollTop = node.scrollHeight;
-    ReactDOM.findDOMNode(this.refs.keywordInput).focus(); 
-
-    this.resetState();
   }
   onKeySubmitNote(shifted, keyCode){
     const { keyword, answer } = this.state;
@@ -86,14 +99,14 @@ class HomeContainer extends Component{
         key={note.Id}
         note={note} 
         index={index} 
-        onDeleteNote={() => this.onDeleteNote(note, index)}
+        onDeleteNote={() => this.onDeleteNote(note.Id, index)}
       />
     );
   }
   render(){
     console.log(this.props);
     var email = loadState("email");
-    var fadeout = this.props.store.home.fadeout;
+    var fadeout = true;
     const { keyword, answer } = this.state;
     const { notes, loading } = this.props.store.note;
     return (
@@ -183,7 +196,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ getNotes, submitNote, deleteNote, getNotebooks, setNotebook }, dispatch))
+  return Object.assign({}, bindActionCreators({ getNotes, submitNote, deleteNote }, dispatch))
 }
 
 export default connect(
