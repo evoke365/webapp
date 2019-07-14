@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { getNotes, submitNote, deleteNote, getNotebooks, setNotebook } from '../../actions/home'
 import { loadState, clearState } from '../../localStorage'
 import { PUT_NOTE } from '../../config'
+import NoteContainer from './note'
 import {slide as Menu} from 'react-burger-menu';
 
 var FontAwesome = require('react-fontawesome');
@@ -75,6 +76,16 @@ class HomeContainer extends Component{
       }
     }
   }
+  getNoteConatiner(note, index) {
+    return (
+      <NoteContainer
+        key={note.Id}
+        note={note} 
+        index={index} 
+        onDeleteNote={() => this.onDeleteNote(note, index)}
+      />
+    );
+  }
   render(){
     console.log(this.props);
     var email = loadState("email");
@@ -114,28 +125,9 @@ class HomeContainer extends Component{
           transitionEnterTimeout={600}
           transitionAppearTimeout={600}
           transitionLeaveTimeout={500}>
-          {Array.isArray(notes) ? notes.map((note, index) => {
-            return (
-            <div key={note.Id}>
-            <div className="container-nw">
-              <div className="container-text">
-                <p className="text-keyword">{note.Keyword}</p>
-                <p className="text-main-points">{note.Answer}</p>
-              </div>
-              <div className="container-switch">
-                <div className="btn-panel-note">
-                    <button 
-                    title="Beat the forgetting curve! When turned, this note is scheduled for revised."
-                    tabIndex="-1" 
-                    className={note.Important ? '_button btn-panel-button calendar-check' : '_button btn-panel-button calendar-uncheck'} onClick={(e)=>{this.onImportantNote(note,index)}}><FontAwesome name="calendar-check-o"/></button>
-                </div>
-              </div>
-              <div className="btn-panel-hidden">
-                <button tabIndex="-1" className="_button btn-panel-button" onClick={(e)=>{this.onDeleteNote(note.Id,index)}}><FontAwesome name="trash-o"/></button>
-              </div>
-            </div>
-            <hr/></div>)
-          }) : null}
+          {Array.isArray(notes) ? notes.map((note, index) => (
+            this.getNoteConatiner(note, index)
+          )) : null}
           </ReactCSSTransitionGroup>
           </div>
         </div>
