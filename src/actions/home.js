@@ -37,7 +37,7 @@ export function getNotes(userId){
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const DELETE_NOTE_SUCCESS = 'DELETE_NOTE_SUCCESS';
 export const DELETE_NOTE_FAIL = 'DELETE_NOTE_FAIL';
-export function deleteNote(token, noteId) {
+export function deleteNote(token, noteId, index) {
   return {
     type: DELETE_NOTE,
     payload: {
@@ -50,5 +50,8 @@ export function deleteNote(token, noteId) {
         }
       },
     },
+    internal: {
+      noteIndex: index,
+    }
   }
 }

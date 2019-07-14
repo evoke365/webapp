@@ -410,7 +410,7 @@ hr {
 }
 .btn-panel-hidden {
   display: none;
-  width: 124px;
+  width: 100px;
   position: absolute;
   right: 0px;
   bottom: 5px;

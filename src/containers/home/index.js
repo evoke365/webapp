@@ -6,9 +6,8 @@ import { connect } from 'react-redux'
 import { getNotes, submitNote, deleteNote } from '../../actions/home'
 import { loadState, clearState } from '../../localStorage'
 import NoteContainer from './note'
+import NavContainer from './nav'
 import {slide as Menu} from 'react-burger-menu';
-
-var FontAwesome = require('react-fontawesome');
 
 class HomeContainer extends Component{
   state = {
@@ -19,7 +18,7 @@ class HomeContainer extends Component{
   componentDidMount() {
     let email = loadState("email");
     let token = loadState("token");
-    if(typeof(email) === "undefiend" || typeof(token) === "undefined") {
+    if(email === "undefiend" || token === "undefined") {
       this.props.history.push("/");
       return undefined;
     }
@@ -29,16 +28,16 @@ class HomeContainer extends Component{
     })
   }
   componentDidUpdate() {
-    const { loading } = this.props.store.note;
+    const { loadingSubmitNote } = this.props.store.note;
     const { loadingNote } = this.state;
-    if(loading !== loadingNote) {
+    if(loadingSubmitNote !== loadingNote) {
       // new note added, reset state
-      if(loading === false) {
+      if(loadingSubmitNote === false) {
         this.resetState();
         return undefined
       }
       this.setState({
-        loadingNote : loading,
+        loadingNote : loadingSubmitNote,
       })
     }
   }
@@ -53,31 +52,9 @@ class HomeContainer extends Component{
       loadingNote: false,
     })
   }
-  onImportantNote(note,index){
-    // fetch(PUT_NOTE, {
-    //   method: 'POST',
-    //   body: JSON.stringify({"token":loadState("token"), "noteId":note.Id, "newData":{"important": (note.Important === true) ? false : true }})
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   if(data.Success === true){
-    //     this.props.store.home.notes[index] = data.Body.Message;
-    //     this.props.updateNote(this.props.store.home.notes);
-    //     return false;
-    //   }
-    //   else{
-    //     console.log("failed to submit note");
-    //     return false;
-    //   }
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    //   return undefined;
-    // })
-  }
   onDeleteNote(noteId, index){
     let token = loadState("token");
-    this.props.deleteNote(token, noteId);
+    this.props.deleteNote(token, noteId, index);
   }
   onSubmitNote(){
     const { keyword, answer } = this.state;
@@ -97,51 +74,45 @@ class HomeContainer extends Component{
     return (
       <NoteContainer
         key={note.Id}
-        note={note} 
-        index={index} 
+        note={note}
         onDeleteNote={() => this.onDeleteNote(note.Id, index)}
       />
     );
   }
+  getNavContainer(email) {
+    return (
+      <NavContainer 
+        email={email}
+        onLogout={()=>{
+          clearState();
+          this.props.history.push("/");
+        }}
+      />
+    )
+  }
   render(){
-    console.log(this.props);
     var email = loadState("email");
-    var fadeout = true;
     const { keyword, answer } = this.state;
-    const { notes, loading } = this.props.store.note;
+    const { notes, loadingGetNote } = this.props.store.note;
     return (
       <div>
         <Menu>
-          <p className="text-title" >studybox.io</p>
-          <div className="home-left-top">
-            <p className="a-text"><FontAwesome name="user-circle"/> {email}</p>
-            <button tabIndex="-1" className="_button btn-logout"  
-            onClick={(e)=>{
-              clearState();
-              this.props.history.push("/");
-            }}>&nbsp;<FontAwesome name="sign-out"/> </button>
-          </div>
+          {this.getNavContainer(email)}
         </Menu>
         <div className="container-a">
-          <p className="text-title" >studybox.io</p>
-          <div className="home-left-top">
-            <p className="a-text"><FontAwesome name="user-circle"/> {email}</p>
-            <button tabIndex="-1" className="_button btn-logout"  
-            onClick={(e)=>{
-              clearState();
-              this.props.history.push("/login");
-            }}>&nbsp;<FontAwesome name="sign-out"/> </button>
-          </div>
+          {this.getNavContainer(email)}
         </div>
         <div className="container-b">
           <div className="container-b-wrap" ref="noteList">
-          {loading ? <div className="loading-image">Loading...</div> : ""}
-          <ReactCSSTransitionGroup transitionName="animated"
-          transitionAppear={true}
-          transitionLeave={fadeout}
-          transitionEnterTimeout={600}
-          transitionAppearTimeout={600}
-          transitionLeaveTimeout={500}>
+          {loadingGetNote ? <div className="loading-image">Loading...</div> : ""}
+          <ReactCSSTransitionGroup 
+            transitionName="animated"
+            transitionAppear={true}
+            transitionLeave={true}
+            transitionEnterTimeout={600}
+            transitionAppearTimeout={600}
+            transitionLeaveTimeout={500}
+          >
           {Array.isArray(notes) ? notes.map((note, index) => (
             this.getNoteConatiner(note, index)
           )) : null}

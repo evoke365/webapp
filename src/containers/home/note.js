@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 var FontAwesome = require('react-fontawesome');
 
-const NoteContainer = ({note, index, onDeleteNote}) => (
+const NoteContainer = ({note, onDeleteNote}) => (
   <div>
     <div className="container-nw">
       <div className="container-text">
@@ -32,7 +32,6 @@ const NoteContainer = ({note, index, onDeleteNote}) => (
 
 NoteContainer.propTypes = {
     note: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
     onDeleteNote: PropTypes.func.isRequired,
 }
 

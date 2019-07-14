@@ -6,7 +6,9 @@ import {
   
 const initialState = {
   notes: [],
-  loading: false,
+  loadingGetNote: false,
+  loadingSubmitNote: false,
+  loadingDeletNote: false,
   error: "",
 }
 
@@ -18,7 +20,7 @@ export default function note(state = initialState, action) {
         ...{
           notes: state.notes,
           error: "",
-          loading: true,
+          loadingGetNote: true,
         },
       };
     case GET_NOTES_SUCCESS:
@@ -27,7 +29,7 @@ export default function note(state = initialState, action) {
       ...{
         notes: action.payload,
         error: "",
-        loading: false,
+        loadingGetNote: false,
       },
     };
     case GET_NOTES_FAIL:
@@ -36,7 +38,7 @@ export default function note(state = initialState, action) {
       ...{
         notes: state.notes,
         error: "internal error",
-        loading: false,
+        loadingGetNote: false,
       },
     };
     case SUBMIT_NOTE:
@@ -45,7 +47,7 @@ export default function note(state = initialState, action) {
       ...{
         notes: state.notes,
         error: "",
-        loading: true,
+        loadingSubmitNote: true,
       },
     };
     case SUBMIT_NOTE_SUCCESS:
@@ -55,7 +57,7 @@ export default function note(state = initialState, action) {
       ...{
         notes: state.notes,
         error: "",
-        loading: false,
+        loadingSubmitNote: false,
       },
     };
     case SUBMIT_NOTE_FAIL:
@@ -64,7 +66,7 @@ export default function note(state = initialState, action) {
       ...{
         notes: state.notes,
         error: "internal error",
-        loading: false,
+        loadingSubmitNote: false,
       },
     };
     case DELETE_NOTE:
@@ -73,16 +75,17 @@ export default function note(state = initialState, action) {
       ...{
         notes: state.notes,
         error: "",
-        loading: true,
+        loadingDeletNote: true,
       },
     };
     case DELETE_NOTE_SUCCESS:
+    delete state.notes[action.meta.previousAction.internal.noteIndex];
     return {
       ...state,
       ...{
         notes: state.notes,
         error: "",
-        loading: false,
+        loadingDeletNote: false,
       },
     };
     case DELETE_NOTE_FAIL:
@@ -91,7 +94,7 @@ export default function note(state = initialState, action) {
       ...{
         notes: state.notes,
         error: "internal error",
-        loading: false,
+        loadingDeletNote: false,
       },
     };
     default:
