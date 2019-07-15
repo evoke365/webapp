@@ -17,7 +17,6 @@ class VerifyContainer extends Component{
   componentDidMount() {
     let email = loadState("email")
     let pwd = loadState("password")
-    console.log(pwd);
     if(email === undefined || pwd === undefined) {
         this.props.history.push("/");
     }
