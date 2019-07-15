@@ -18,7 +18,7 @@ class HomeContainer extends Component{
   componentDidMount() {
     let email = loadState("email");
     let token = loadState("token");
-    if(email === "undefiend" || token === "undefined") {
+    if(email === undefined || token === undefined) {
       this.props.history.push("/");
       return undefined;
     }
@@ -79,7 +79,8 @@ class HomeContainer extends Component{
       />
     );
   }
-  getNavContainer(email) {
+  getNavContainer() {
+    let email = loadState("email");
     return (
       <NavContainer 
         email={email}
@@ -91,16 +92,15 @@ class HomeContainer extends Component{
     )
   }
   render(){
-    var email = loadState("email");
     const { keyword, answer } = this.state;
     const { notes, loadingGetNote } = this.props.store.note;
     return (
       <div>
         <Menu>
-          {this.getNavContainer(email)}
+          {this.getNavContainer()}
         </Menu>
         <div className="container-a">
-          {this.getNavContainer(email)}
+          {this.getNavContainer()}
         </div>
         <div className="container-b">
           <div className="container-b-wrap" ref="noteList">

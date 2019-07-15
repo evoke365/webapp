@@ -15,7 +15,7 @@ const NavContainer = ({email, onLogout}) => (
 )
 
 NavContainer.propTypes = {
-    email: PropTypes.string.isRequired,
+    email: PropTypes.string,
     onLogout: PropTypes.func.isRequired,
 }
 

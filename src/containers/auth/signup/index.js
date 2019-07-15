@@ -15,7 +15,7 @@ class SignupContainer extends Component{
   }
   componentDidMount() {
     let email = loadState("email")
-    if(typeof(email) === "undefined") {
+    if(email === undefined) {
       this.props.history.push("/");
       return undefined;
     }
