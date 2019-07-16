@@ -1,6 +1,6 @@
-import authEmail from './authEmail'
+import authEmail from './email'
 import newSignup from './signup'
-import authPassword from './authPassword'
+import authPassword from './password'
 import verifyUser from './verify'
 import note from './note'
 import { reducer as burgerMenu } from 'redux-burger-menu';

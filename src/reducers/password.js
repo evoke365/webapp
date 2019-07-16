@@ -6,6 +6,7 @@ const initialState = {
   token: "",
   loading: false,
   error: "",
+  action: "",
 }
 
 export default function authPassword(state = initialState, action){
@@ -17,6 +18,7 @@ export default function authPassword(state = initialState, action){
           token: "",
           error: "",
           loading: true,
+          action: "",
         },
       };
     case VALIDATE_PASSWORD_SUCCESS:
@@ -24,6 +26,7 @@ export default function authPassword(state = initialState, action){
       ...state,
       ...{
         token: action.payload.token,
+        action: action.payload.action,
         error: "",
         loading: false,
       },
@@ -35,6 +38,7 @@ export default function authPassword(state = initialState, action){
         token: "",
         error: "internal error",
         loading: false,
+        action: "",
       },
     };
     default:

@@ -24,10 +24,14 @@ class LoginContainer extends Component{
     })
   }
   componentDidUpdate() {
-    const { token } = this.props.store.authPassword;
+    const { token, action } = this.props.store.authPassword;
     if (token !== "") {
       saveState("token", token);
       this.props.history.push("/home");
+    }
+    if (action === "verify") {
+      saveState("password", this.state.password)
+      this.props.history.push("/verify");
     }
   }
   onSubmit(){
