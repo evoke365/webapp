@@ -16,6 +16,7 @@ export function submitPassword(email, password){
         data: {
           email: email,
           password: password,
+          timezone: new Date().getTimezoneOffset()/-60,
         }
       },
     },
