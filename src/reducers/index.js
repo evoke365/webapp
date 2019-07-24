@@ -5,8 +5,9 @@ import verifyUser from './verify'
 import note from './note'
 import { reducer as burgerMenu } from 'redux-burger-menu';
 import { combineReducers } from 'redux'
+import { clearState } from '../localStorage'
 
-const reducers = combineReducers({
+const childReducers = combineReducers({
 	authEmail,
 	newSignup,
 	authPassword,
@@ -14,5 +15,13 @@ const reducers = combineReducers({
 	note,
 	burgerMenu
 })
+
+const reducers = (state, action) => {
+	if (action.type === 'USER_LOGOUT') {
+		clearState();
+		state = undefined
+	}
+	return childReducers(state, action)
+}
 
 export default reducers

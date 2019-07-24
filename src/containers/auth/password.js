@@ -7,7 +7,8 @@ const override = css`
     display: block;
     margin: 0 auto;
     border-color: red;
-    width: 600px;
+    max-width: 600px;
+    width: 80%;
 `;
 
 const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (

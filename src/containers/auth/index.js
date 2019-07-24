@@ -41,6 +41,7 @@ class AuthContainer extends Component{
   }
   getView(){
     const { error } = this.state;
+    const { loading } = this.props.store.authEmail;
     return (
       <EmailContainer 
         onKeyDown={(e)=>{
@@ -55,6 +56,7 @@ class AuthContainer extends Component{
         })}}
         onNext={(e)=>{this.onSubmit()}}
         error={error} 
+        loading = {loading}
       />
     );
   }
