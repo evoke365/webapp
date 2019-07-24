@@ -147,7 +147,6 @@ class HomeContainer extends Component{
           <button disabled={keyword.length === 0 || answer.length === 0} tabIndex="0" className={getButtonClassName(keyword, answer)} 
           onClick={(e) => {this.onSubmitNote()}}>
             <p>add note</p>
-            {/* <p className="hotkey-add-note">[shift + enter]</p> */}
           </button>
         </div>
       </div>
