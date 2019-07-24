@@ -1,5 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import { css } from '@emotion/core';
+import BarLoader from 'react-spinners/BarLoader';
+
+const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+    width: 600px;
+`;
 
 const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
   <div>
@@ -12,11 +21,16 @@ const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
     />
     <p className={"text-error" + (error ? " text-error-visible" : "")}>{error}</p>
     <button 
-      className={loading ? "_button_disabled" : "_button"} 
-      onClick={onSubmit} 
-      disabled={loading} >{loading ? "..." : "next"}
+      className="_button"
+      onClick={onSubmit}>
+      next
     </button>
-  </div>  
+    <BarLoader
+      css={override}
+      color={'#FBA73B'}
+      loading={loading}
+    />
+  </div>
 );
 
 PasswordContainer.propTypes = {
