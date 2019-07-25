@@ -27,7 +27,7 @@ const EmailContainer = ({onKeyDown, onChange, onNext, error, loading}) => (
       loading={loading}
     />
     <p className={"text-error" + (error === "" ? "" : " text-error-visible" )}>{error}</p>
-    <button className="_button" onClick={onNext}>next</button>
+    <button disabled={loading} className="_button" onClick={onNext}>next</button>
   </div>
 );
 

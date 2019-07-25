@@ -27,6 +27,7 @@ const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
     />
     <p className={"text-error" + (error ? " text-error-visible" : "")}>{error}</p>
     <button 
+      disabled={loading}
       className="_button"
       onClick={onSubmit}>
       next
