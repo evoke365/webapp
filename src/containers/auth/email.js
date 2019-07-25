@@ -21,13 +21,13 @@ const EmailContainer = ({onKeyDown, onChange, onNext, error, loading}) => (
       title="Use an email that is accessable on your mobile device."
       onKeyDown={onKeyDown} 
       onChange={onChange} />
-    <p className={"text-error" + (error === "" ? "" : " text-error-visible" )}>{error}</p>
-    <button className="_button" onClick={onNext}>next</button>
     <BarLoader
       css={override}
       color={'#FBA73B'}
       loading={loading}
     />
+    <p className={"text-error" + (error === "" ? "" : " text-error-visible" )}>{error}</p>
+    <button className="_button" onClick={onNext}>next</button>
   </div>
 );
 

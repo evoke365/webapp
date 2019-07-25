@@ -4,7 +4,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getNotes, submitNote, deleteNote } from '../../actions/home'
-import { loadState, clearState } from '../../localStorage'
+import { logout } from '../../actions/logout'
+import { loadState } from '../../localStorage'
 import NoteContainer from './note'
 import NavContainer from './nav'
 import {slide as Menu} from 'react-burger-menu';
@@ -85,7 +86,7 @@ class HomeContainer extends Component{
       <NavContainer 
         email={email}
         onLogout={()=>{
-          clearState();
+          this.props.logout();
           this.props.history.push("/");
         }}
       />
@@ -166,7 +167,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ getNotes, submitNote, deleteNote }, dispatch))
+  return Object.assign({}, bindActionCreators({ getNotes, submitNote, deleteNote, logout }, dispatch))
 }
 
 export default connect(

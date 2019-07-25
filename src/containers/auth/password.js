@@ -20,17 +20,17 @@ const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
       type="password" 
       placeholder="Your password" 
     />
+    <BarLoader
+      css={override}
+      color={'#FBA73B'}
+      loading={loading}
+    />
     <p className={"text-error" + (error ? " text-error-visible" : "")}>{error}</p>
     <button 
       className="_button"
       onClick={onSubmit}>
       next
     </button>
-    <BarLoader
-      css={override}
-      color={'#FBA73B'}
-      loading={loading}
-    />
   </div>
 );
 
