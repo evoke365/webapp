@@ -1,15 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { css } from '@emotion/core';
-import BarLoader from 'react-spinners/BarLoader';
-
-const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-    max-width: 600px;
-    width: 80%;
-`;
+import LoadingContainer from './loading'
 
 const EmailContainer = ({onKeyDown, onChange, onNext, error, loading}) => (
   <div className="container-email-and-button clearfix">
@@ -21,11 +12,7 @@ const EmailContainer = ({onKeyDown, onChange, onNext, error, loading}) => (
       title="Use an email that is accessable on your mobile device."
       onKeyDown={onKeyDown} 
       onChange={onChange} />
-    <BarLoader
-      css={override}
-      color={'#FBA73B'}
-      loading={loading}
-    />
+    <LoadingContainer isLoading={loading}/>
     <p className={"text-error" + (error === "" ? "" : " text-error-visible" )}>{error}</p>
     <button disabled={loading} className="_button" onClick={onNext}>next</button>
   </div>

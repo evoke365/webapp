@@ -1,15 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { css } from '@emotion/core';
-import BarLoader from 'react-spinners/BarLoader';
-
-const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-    max-width: 600px;
-    width: 80%;
-`;
+import LoadingContainer from './loading'
 
 const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
   <div>
@@ -20,11 +11,7 @@ const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
       type="password" 
       placeholder="Your password" 
     />
-    <BarLoader
-      css={override}
-      color={'#FBA73B'}
-      loading={loading}
-    />
+    <LoadingContainer isLoading={loading} />
     <p className={"text-error" + (error ? " text-error-visible" : "")}>{error}</p>
     <button 
       disabled={loading}
