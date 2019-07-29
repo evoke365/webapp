@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { submitPassword } from '../../../actions/login'
+import { logout } from '../../../actions/logout'
 import { loadState, saveState } from '../../../localStorage'
 import PasswordContainer from '../password'
 
@@ -32,6 +33,12 @@ class LoginContainer extends Component{
     if (action === "verify") {
       saveState("password", this.state.password)
       this.props.history.push("/verify");
+    }
+  }
+  componentWillUnmount() {
+    // browser go back button is triggerred
+    if(this.props.history.action === "POP") {
+      this.props.logout();
     }
   }
   onSubmit(){
@@ -82,7 +89,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ submitPassword }, dispatch))
+  return Object.assign({}, bindActionCreators({ submitPassword, logout }, dispatch))
 }
 
 export default connect(
