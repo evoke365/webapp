@@ -106,12 +106,13 @@ class HomeContainer extends Component{
         <div className="container-b">
           <div className="container-b-wrap" ref="noteList">
           {loadingGetNote ? <div className="loading-image">Loading...</div> : ""}
+          
           <ReactCSSTransitionGroup 
             transitionName="animated"
             transitionAppear={true}
             transitionLeave={true}
-            transitionEnterTimeout={600}
-            transitionAppearTimeout={600}
+            transitionEnterTimeout={200}
+            transitionAppearTimeout={200}
             transitionLeaveTimeout={500}
           >
           {Array.isArray(notes) ? notes.map((note, index) => (

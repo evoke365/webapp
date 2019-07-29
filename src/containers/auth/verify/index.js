@@ -55,6 +55,7 @@ class VerifyContainer extends Component{
     this.props.submitCode(email, code);
   }
   getView(){
+    const { loading } = this.props.store.verifyUser;
     return (
       <CodeContainer
         onKeyDown={(e)=>{
@@ -70,6 +71,7 @@ class VerifyContainer extends Component{
         }}
         onNext={(e)=>{this.onSubmit(e.target.value)}}
         error={this.state.error}
+        loading={loading}
       />
     )
   }
