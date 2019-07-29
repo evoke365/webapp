@@ -9,6 +9,15 @@ import { loadState } from '../../localStorage'
 import NoteContainer from './note'
 import NavContainer from './nav'
 import {slide as Menu} from 'react-burger-menu';
+import { css } from '@emotion/core';
+import BarLoader from 'react-spinners/BarLoader';
+
+const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+    width: 100%;
+`;
 
 class HomeContainer extends Component{
   state = {
@@ -105,8 +114,11 @@ class HomeContainer extends Component{
         </div>
         <div className="container-b">
           <div className="container-b-wrap" ref="noteList">
-          {loadingGetNote ? <div className="loading-image">Loading...</div> : ""}
-          
+          <BarLoader
+            css={override}
+            color={'#FBA73B'}
+            loading={loadingGetNote}
+          />
           <ReactCSSTransitionGroup 
             transitionName="animated"
             transitionAppear={true}
