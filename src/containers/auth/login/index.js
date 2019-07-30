@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { submitPassword } from '../../../actions/login'
+import { submitPassword, clearError } from '../../../actions/login'
 import { logout } from '../../../actions/logout'
 import { loadState, saveState } from '../../../localStorage'
 import PasswordContainer from '../password'
@@ -25,7 +25,7 @@ class LoginContainer extends Component{
     })
   }
   componentDidUpdate() {
-    const { token, action } = this.props.store.authPassword;
+    const { token, action, error } = this.props.store.authPassword;
     if (token !== "") {
       saveState("token", token);
       this.props.history.push("/home");
@@ -33,6 +33,12 @@ class LoginContainer extends Component{
     if (action === "verify") {
       saveState("password", this.state.password)
       this.props.history.push("/verify");
+    }
+    if (error !== "") {
+      this.props.clearError();
+      this.setState({
+        error: INVALID_PASSWORD_ERROR
+      });
     }
   }
   componentWillUnmount() {
@@ -89,7 +95,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ submitPassword, logout }, dispatch))
+  return Object.assign({}, bindActionCreators({ submitPassword, logout, clearError }, dispatch))
 }
 
 export default connect(

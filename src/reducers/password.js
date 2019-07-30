@@ -1,5 +1,6 @@
 import {
-  VALIDATE_PASSWORD, VALIDATE_PASSWORD_SUCCESS, VALIDATE_PASSWORD_FAIL
+  VALIDATE_PASSWORD, VALIDATE_PASSWORD_SUCCESS, VALIDATE_PASSWORD_FAIL, 
+  CLEAR_ERROR
 } from '../actions/login'
 
 const initialState = {
@@ -41,6 +42,13 @@ export default function authPassword(state = initialState, action){
         action: "",
       },
     };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        ...{
+          error: "",
+        },
+      }
     default:
     return state;
   }

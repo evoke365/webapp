@@ -5,7 +5,6 @@ import {
 export const SIGNUP = 'SIGNUP';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
-
 export function submitPassword(email, password){
   return {
     types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL],
@@ -26,7 +25,6 @@ export function submitPassword(email, password){
 export const VERIFY_CODE = 'VERIFY_CODE';
 export const VERIFY_CODE_SUCCESS = 'VERIFY_CODE_SUCCESS';
 export const VERIFY_CODE_FAIL = 'VERIFY_CODE_FAIL';
-
 export function submitCode(email, code){
   return {
     types: [VERIFY_CODE, VERIFY_CODE_SUCCESS, VERIFY_CODE_FAIL],

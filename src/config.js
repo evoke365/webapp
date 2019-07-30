@@ -1,5 +1,5 @@
-export const RESOURCE_API = "http://localhost:8080"
-export const AUTH_API = "http://localhost:8090"
+export const RESOURCE_API = "http://api.studybox.io:8080"
+export const AUTH_API = "http://api.studybox.io:8090"
 
 /* User */
 export const GET_USER = AUTH_API + "/user/find"
