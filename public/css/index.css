@@ -233,18 +233,11 @@ hr {
 
 .container-b {
   display: flex;
-  align-items: flex-end;
   position: absolute;
   top: 10px;
   bottom: 103px;
   left: 20%;
   right: 0;
-}
-
-.container-b-wrap {
-  max-height: 100%;
-  width: 100%;
-  overflow-y: auto;
 }
 
 .container-c {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -11,12 +10,17 @@ import NavContainer from './nav'
 import {slide as Menu} from 'react-burger-menu';
 import { css } from '@emotion/core';
 import BarLoader from 'react-spinners/BarLoader';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-    width: 100%;
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+  width: 100%;
+`;
+const toBottom = css`
+  height: 600,
+  width: 400
 `;
 
 class HomeContainer extends Component{
@@ -24,6 +28,7 @@ class HomeContainer extends Component{
     keyword: "",
     answer: "",
     loadingNote: false,
+    notes: [],
   }
   componentDidMount() {
     let email = loadState("email");
@@ -33,33 +38,41 @@ class HomeContainer extends Component{
       return undefined;
     }
     this.props.getNotes(token);
-    this.setState({
-      notes: this.props.store.note.notes
-    })
   }
   componentDidUpdate() {
-    const { loadingSubmitNote } = this.props.store.note;
+    const { loadingSubmitNote, notes } = this.props.store.note;
     const { loadingNote } = this.state;
+    // initial loading
+    if(notes.length > 0 && this.state.notes.length === 0) {
+      console.log("init state")
+      this.setState({
+        notes: notes,
+      })
+      return undefined
+    }
+
     if(loadingSubmitNote !== loadingNote) {
       // new note added, reset state
       if(loadingSubmitNote === false) {
-        this.resetState();
+        console.log("complete")
+        this.resetState(notes);
         return undefined
       }
+      console.log("loading");
       this.setState({
         loadingNote : loadingSubmitNote,
+        notes: notes,
       })
+      return undefined
     }
   }
-  resetState() {
-    var node = ReactDOM.findDOMNode(this.refs.noteList);
-    node.scrollTop = node.scrollHeight;
-    ReactDOM.findDOMNode(this.refs.keywordInput).focus(); 
-
+  resetState(notes) {
+    console.log(notes);
     this.setState({
       keyword: "",
       answer: "",
       loadingNote: false,
+      notes: notes,
     })
   }
   onDeleteNote(noteId, index){
@@ -67,8 +80,15 @@ class HomeContainer extends Component{
     this.props.deleteNote(token, noteId, index);
   }
   onSubmitNote(){
-    const { keyword, answer } = this.state;
+    const { keyword, answer, notes } = this.state;
     if(keyword !== "" && answer !== "") {
+      notes.push({
+        Id: keyword,
+        Keyword: keyword,
+        Answer: answer,
+        Important: true,
+      });
+      this.resetState(notes)
       this.props.submitNote(loadState("token"), keyword, answer);
     }
   }
@@ -102,8 +122,8 @@ class HomeContainer extends Component{
     )
   }
   render(){
-    const { keyword, answer } = this.state;
-    const { notes, loadingGetNote } = this.props.store.note;
+    const { keyword, answer, notes } = this.state;
+    const { loadingGetNote } = this.props.store.note;
     return (
       <div>
         <Menu>
@@ -113,25 +133,25 @@ class HomeContainer extends Component{
           {this.getNavContainer()}
         </div>
         <div className="container-b">
-          <div className="container-b-wrap" ref="noteList">
-          <BarLoader
-            css={override}
-            color={'#FBA73B'}
-            loading={loadingGetNote}
-          />
-          <ReactCSSTransitionGroup 
-            transitionName="animated"
-            transitionAppear={true}
-            transitionLeave={true}
-            transitionEnterTimeout={200}
-            transitionAppearTimeout={200}
-            transitionLeaveTimeout={500}
-          >
-          {Array.isArray(notes) ? notes.map((note, index) => (
-            this.getNoteConatiner(note, index)
-          )) : null}
-          </ReactCSSTransitionGroup>
-          </div>
+          <ScrollToBottom className={ toBottom }>
+            <BarLoader
+              css={override}
+              color={'#FBA73B'}
+              loading={loadingGetNote}
+            />
+            <ReactCSSTransitionGroup 
+              transitionName="animated"
+              transitionAppear={true}
+              transitionLeave={true}
+              transitionEnterTimeout={200}
+              transitionAppearTimeout={200}
+              transitionLeaveTimeout={500}
+            >
+            {Array.isArray(notes) ? notes.map((note, index) => (
+              this.getNoteConatiner(note, index)
+            )) : null}
+            </ReactCSSTransitionGroup>
+          </ScrollToBottom>
         </div>
         <div className="container-c">
           <textarea onChange={(e)=>{
