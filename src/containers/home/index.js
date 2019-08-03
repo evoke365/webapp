@@ -17,6 +17,8 @@ const override = css`
   margin: 0 auto;
   border-color: red;
   width: 100%;
+  position: absolute;
+  bottom: 0;
 `;
 const toBottom = css`
   height: 600,
@@ -40,55 +42,40 @@ class HomeContainer extends Component{
     this.props.getNotes(token);
   }
   componentDidUpdate() {
-    const { loadingSubmitNote, notes } = this.props.store.note;
+    const { loading, notes } = this.props.store.note;
     const { loadingNote } = this.state;
     // initial loading
     if(notes.length > 0 && this.state.notes.length === 0) {
-      console.log("init state")
       this.setState({
         notes: notes,
       })
       return undefined
     }
 
-    if(loadingSubmitNote !== loadingNote) {
+    if(loading !== loadingNote) {
       // new note added, reset state
-      if(loadingSubmitNote === false) {
-        console.log("complete")
-        this.resetState(notes);
-        return undefined
+      if(loading === true) {
+        this.setState({
+          loadingNote : true,
+          notes: notes,
+        })
+      } else {
+        this.setState({
+          keyword: "",
+          answer: "",
+          loadingNote: false,
+        })
       }
-      console.log("loading");
-      this.setState({
-        loadingNote : loadingSubmitNote,
-        notes: notes,
-      })
-      return undefined
+      return undefined;
     }
-  }
-  resetState(notes) {
-    console.log(notes);
-    this.setState({
-      keyword: "",
-      answer: "",
-      loadingNote: false,
-      notes: notes,
-    })
   }
   onDeleteNote(noteId, index){
     let token = loadState("token");
     this.props.deleteNote(token, noteId, index);
   }
   onSubmitNote(){
-    const { keyword, answer, notes } = this.state;
+    const { keyword, answer } = this.state;
     if(keyword !== "" && answer !== "") {
-      notes.push({
-        Id: keyword,
-        Keyword: keyword,
-        Answer: answer,
-        Important: true,
-      });
-      this.resetState(notes)
       this.props.submitNote(loadState("token"), keyword, answer);
     }
   }
@@ -123,7 +110,7 @@ class HomeContainer extends Component{
   }
   render(){
     const { keyword, answer, notes } = this.state;
-    const { loadingGetNote } = this.props.store.note;
+    const { loading } = this.props.store.note;
     return (
       <div>
         <Menu>
@@ -134,11 +121,6 @@ class HomeContainer extends Component{
         </div>
         <div className="container-b">
           <ScrollToBottom className={ toBottom }>
-            <BarLoader
-              css={override}
-              color={'#FBA73B'}
-              loading={loadingGetNote}
-            />
             <ReactCSSTransitionGroup 
               transitionName="animated"
               transitionAppear={true}
@@ -152,6 +134,11 @@ class HomeContainer extends Component{
             )) : null}
             </ReactCSSTransitionGroup>
           </ScrollToBottom>
+          <BarLoader
+            css={override}
+            color={'#FBA73B'}
+            loading={loading}
+          />
         </div>
         <div className="container-c">
           <textarea onChange={(e)=>{
