@@ -87,12 +87,13 @@ class HomeContainer extends Component{
       }
     }
   }
-  getNoteConatiner(note, index) {
+  getNoteConatiner(note, index, loading) {
     return (
       <NoteContainer
         key={note.Id}
         note={note}
         onDeleteNote={() => this.onDeleteNote(note.Id, index)}
+        loading={loading}
       />
     );
   }
@@ -130,7 +131,7 @@ class HomeContainer extends Component{
               transitionLeaveTimeout={500}
             >
             {Array.isArray(notes) ? notes.map((note, index) => (
-              this.getNoteConatiner(note, index)
+              this.getNoteConatiner(note, index, loading)
             )) : null}
             </ReactCSSTransitionGroup>
           </ScrollToBottom>
@@ -165,7 +166,7 @@ class HomeContainer extends Component{
           }}} 
           placeholder="main points / answer" title="Press [tab] to move to the 'add note' button.">
           </textarea>
-          <button disabled={keyword.length === 0 || answer.length === 0} tabIndex="0" className={getButtonClassName(keyword, answer)} 
+          <button disabled={keyword.length === 0 || answer.length === 0 || loading} tabIndex="0" className={getButtonClassName(keyword, answer)} 
           onClick={(e) => {this.onSubmitNote()}}>
             <p>add note</p>
           </button>
