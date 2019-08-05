@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { submitEmail } from '../../actions/login'
 import EmailContainer from './email'
-import { saveState } from '../../localStorage'
+import { loadState, saveState } from '../../localStorage'
 
 const INVALID_EMAIL_ERROR = "Let’s try that again, the email address you have entered is invalid."
 
@@ -11,6 +11,13 @@ class AuthContainer extends Component{
   state = {
     email: "",
     error: "",
+  }
+  componentDidMount() {
+    let email = loadState("email");
+    let token = loadState("token");
+    if (email !== undefined && token !== undefined) {
+      this.props.history.push("/home");
+    }
   }
   componentDidUpdate() {
     const { found } = this.props.store.authEmail;
