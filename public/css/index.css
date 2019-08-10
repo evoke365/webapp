@@ -60,6 +60,14 @@ hr {
     font-size: 1.667em;
 }
 
+.step-1 ._link {
+  display: block;
+  margin: 0 auto;
+  font-size: 15px;
+  margin-top: 20px;
+  color: rgb(251, 167, 59);
+}
+
 .step-1 ._input {
   display: block;
   width: 80%;

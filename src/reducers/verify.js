@@ -1,6 +1,6 @@
 import {
     VERIFY_CODE, VERIFY_CODE_SUCCESS, VERIFY_CODE_FAIL
-  } from '../actions/signup'
+  } from '../actions/verify'
 
 const initialState = {
   email: "",

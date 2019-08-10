@@ -1,11 +1,13 @@
-export const RESOURCE_API = "http://api.studybox.io:8080"
-export const AUTH_API = "http://api.studybox.io:8090"
+export const RESOURCE_API = "http://localhost:8080"
+export const AUTH_API = "http://localhost:8090"
 
 /* User */
 export const GET_USER = AUTH_API + "/user/find"
 export const AUTH_USER = AUTH_API + "/user/login"
 export const POST_USER = AUTH_API + "/user/signup"
 export const VERIFY_USER = AUTH_API + "/user/verify"
+export const FORGET_PASSWORD_USER = AUTH_API + "/user/forget"
+export const NEW_PASSWORD_USER = AUTH_API + "/user/update"
 
 /* Note */
 export const GET_NOTES_API = RESOURCE_API + "/notes"

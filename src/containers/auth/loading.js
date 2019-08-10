@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
 import BarLoader from 'react-spinners/BarLoader';

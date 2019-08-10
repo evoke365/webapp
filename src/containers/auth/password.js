@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import LoadingContainer from './loading'
+import LoadingContainer from './loading';
 
-const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
+const PasswordContainer = ({onKeyDown, onChange, onSubmit, onForget, error, loading, showForget}) => (
   <div>
     <input 
       onChange={onChange}        
@@ -19,6 +19,16 @@ const PasswordContainer = ({onKeyDown, onChange, onSubmit, error, loading}) => (
       onClick={onSubmit}>
       next
     </button>
+    {showForget && (
+      <div className={"showForgetContainer"}>
+        <button 
+          disabled={loading}
+          className="_link"
+          onClick={onForget}>
+          I have forgotten my password
+        </button>
+      </div>
+    )}
   </div>
 );
 
@@ -28,6 +38,8 @@ PasswordContainer.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   error: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
+  showForget: PropTypes.bool,
+  onForget: PropTypes.func,
 }
 
 export default PasswordContainer

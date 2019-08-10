@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { submitCode } from '../../../actions/signup'
+import { submitCode } from '../../../actions/verify'
 import { logout } from '../../../actions/logout'
 import { loadState, saveState } from '../../../localStorage'
-import CodeContainer from './code'
+import CodeContainer from '../code'
 
 const INVALID_CODE_ERROR = "The activation code you have enterred is invalid."
-
 
 class VerifyContainer extends Component{
   state = {
@@ -18,8 +17,13 @@ class VerifyContainer extends Component{
   componentDidMount() {
     let email = loadState("email")
     let pwd = loadState("password")
-    if(email === undefined || pwd === undefined) {
+    if(email === undefined) {
         this.props.history.push("/");
+    }
+    if(pwd === undefined) {
+      if (this.props.location.state.context !== "forget") {
+        this.props.history.push("/");
+      }
     }
     this.setState({
         email: email,
@@ -75,11 +79,24 @@ class VerifyContainer extends Component{
       />
     )
   }
+  getContext(ctx){
+    switch(ctx){
+      case "signup":
+        return <span><p>Thank you!</p><p>We have sent a verification code to your email address.</p></span>;
+      case "login":
+        return <span><p>Thank you!</p><p>We have sent a verification code to your email address.</p></span>
+      case "forget":
+        return <span><p>Please verify it's you.</p><p>We have sent a verification code to your email address.</p></span>
+      default:
+        break;
+    }
+  }
   render() {
+    let ctx = this.props.location.state.context;
     return (
       <div className="step-1">
         <p className="text-header">studybox.io</p>
-        <p className="text-email">Thank you. We have sent you a verification code to your email address.</p>
+        <div className="text-email">{this.getContext(ctx)}</div>
           {this.getView()}
       </div>
     )

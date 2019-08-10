@@ -1,5 +1,5 @@
 import {
-    GET_USER, AUTH_USER
+    GET_USER, AUTH_USER, FORGET_PASSWORD_USER
 } from '../config'
 
 export const VALIDATE_EMAIL = 'VALIDATE_EMAIL';
@@ -40,5 +40,23 @@ export const CLEAR_ERROR = 'CLEAR_ERROR'
 export function clearError() {
   return  {
     type: CLEAR_ERROR
+  }
+}
+
+export const FORGET_PASSWORD = 'FORGET_PASSWORD';
+export const FORGET_PASSWORD_SUCCESS = 'FORGET_PASSWORD_SUCCESS';
+export const FORGET_PASSWORD_FAIL = 'FORGET_PASSWORD_FAIL';
+export function forgetPassword(email){
+  return {
+    types: [FORGET_PASSWORD, FORGET_PASSWORD_SUCCESS, FORGET_PASSWORD_FAIL],
+    payload: {
+      request: {
+        url: FORGET_PASSWORD_USER,
+        method: 'PUT',
+        data: {
+          email: email,
+        }
+      },
+    },
   }
 }

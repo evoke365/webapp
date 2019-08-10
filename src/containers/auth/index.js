@@ -24,12 +24,12 @@ class AuthContainer extends Component{
     switch(found) {
       case 0:
         // redirect to sign up
-        saveState("email", this.state.email)
+        saveState("email", this.state.email.toLowerCase());
         this.props.history.push("/signup");
         break;
       case 1:
         // redirect to login
-        saveState("email", this.state.email)
+        saveState("email", this.state.email.toLowerCase());
         this.props.history.push("/signin");
         break;
       default:

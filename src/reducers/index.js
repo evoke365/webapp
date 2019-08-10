@@ -1,6 +1,8 @@
 import authEmail from './email'
 import newSignup from './signup'
 import authPassword from './password'
+import forgetPassword from './forget'
+import newPassword from './newpwd'
 import verifyUser from './verify'
 import note from './note'
 import { reducer as burgerMenu } from 'redux-burger-menu';
@@ -11,6 +13,8 @@ const childReducers = combineReducers({
 	authEmail,
 	newSignup,
 	authPassword,
+	forgetPassword,
+	newPassword,
 	verifyUser,
 	note,
 	burgerMenu

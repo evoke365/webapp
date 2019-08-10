@@ -8,7 +8,7 @@ import PasswordContainer from '../password'
 
 const INVALID_PASSWORD_ERROR = "Let’s try that again, the password you have entered is invalid."
 
-class SignupContainer extends Component{
+class ForgetContainer extends Component{
   state = {
     email: "",
     password: "",
@@ -29,7 +29,7 @@ class SignupContainer extends Component{
     })
   }
   componentDidUpdate() {
-    const { success } = this.props.store.newSignup;
+    const { success } = this.props.store.newPassword;
     switch(success) {
       case 1:
         // redirect to verify
@@ -84,7 +84,7 @@ class SignupContainer extends Component{
     return (
       <div className="step-1">
         <p className="text-header">studybox.io</p>
-        <p className="text-email">It looks like you are new here. Let us sign you up!</p>
+        <p className="text-email">Enter your new password</p>
           {this.getView()}
       </div>
     )
@@ -102,4 +102,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignupContainer)
+)(ForgetContainer)

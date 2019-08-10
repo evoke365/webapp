@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { submitPassword, clearError } from '../../../actions/login'
+import { submitPassword, forgetPassword, clearError } from '../../../actions/login'
 import { logout } from '../../../actions/logout'
 import { loadState, saveState } from '../../../localStorage'
 import PasswordContainer from '../password'
@@ -36,7 +36,10 @@ class LoginContainer extends Component{
     }
     if (action === "verify") {
       saveState("password", this.state.password)
-      this.props.history.push("/verify");
+      this.props.history.push({
+        pathname: "/verify",
+        state: { context: "login" }
+      });
     }
     if (error !== "") {
       this.props.clearError();
@@ -63,6 +66,14 @@ class LoginContainer extends Component{
     // TODO: handle http error
     this.props.submitPassword(email, password);
   }
+  onForget(){
+    const { email } = this.state;
+    this.props.forgetPassword(email);
+    this.props.history.push({
+      pathname: "/verify",
+      state: { context: "forget" }
+    });
+  }
   getView(){
     return (
       <PasswordContainer
@@ -79,6 +90,8 @@ class LoginContainer extends Component{
         onSubmit={() => this.onSubmit()}
         error={this.state.error}
         loading={this.props.store.authPassword.loading}
+        showForget={true}
+        onForget={() => this.onForget()}
       />
     );
   }
@@ -99,7 +112,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ submitPassword, logout, clearError }, dispatch))
+  return Object.assign({}, bindActionCreators({ submitPassword, forgetPassword, logout, clearError }, dispatch))
 }
 
 export default connect(
