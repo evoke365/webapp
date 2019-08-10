@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { submitPassword } from '../../../actions/signup'
+import { newPassword } from '../../../actions/forget'
 import { logout } from '../../../actions/logout'
 import { loadState, saveState } from '../../../localStorage'
 import PasswordContainer from '../password'
@@ -21,6 +21,10 @@ class ForgetContainer extends Component{
       this.props.history.push("/home");
     }
     if(email === undefined) {
+      this.props.history.push("/");
+      return undefined;
+    }
+    if(token === undefined) {
       this.props.history.push("/");
       return undefined;
     }
@@ -59,7 +63,7 @@ class ForgetContainer extends Component{
       return undefined;
     }
     // TODO: handle http error
-    this.props.submitPassword(email, password);
+    this.props.newPassword(email, password);
   }
   getView(){
     return (
@@ -96,7 +100,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ submitPassword, logout }, dispatch))
+  return Object.assign({}, bindActionCreators({ newPassword, logout }, dispatch))
 }
 
 export default connect(

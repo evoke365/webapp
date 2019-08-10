@@ -51,7 +51,7 @@ export function forgetPassword(email){
     types: [FORGET_PASSWORD, FORGET_PASSWORD_SUCCESS, FORGET_PASSWORD_FAIL],
     payload: {
       request: {
-        url: FORGET_PASSWORD_USER,
+        url: FORGET_PASSWORD_USER + "/" + email,
         method: 'PUT',
         data: {
           email: email,
