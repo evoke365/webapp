@@ -13,32 +13,55 @@ class VerifyContainer extends Component{
     email: "",
     error: "",
     code: "",
+    ctx: "",
   }
   componentDidMount() {
-    let email = loadState("email")
-    let pwd = loadState("password")
-    if(email === undefined) {
-        this.props.history.push("/");
-    }
-    if(pwd === undefined) {
-      if (this.props.location.state.context !== "forget") {
+    var state;
+    var ctx;
+    if(this.props.location.state === undefined) {
+      this.props.history.push("/");
+    } else {
+      state = this.props.location.state;
+      if (state.hasOwnProperty('context')) {
+        ctx = state.context;
+      } else {
         this.props.history.push("/");
       }
     }
+    let email = loadState("email")
+    if(email === undefined) {
+      this.props.history.push("/");
+    }
+    switch(ctx) {
+      case "forget":
+        break;
+      default:
+        let pwd = loadState("password")
+        if(pwd === undefined) {
+          this.props.history.push("/");
+        }
+        break;
+    }
     this.setState({
         email: email,
+        ctx: ctx,
     })
   }
   componentDidUpdate() {
     const { email, token, error } = this.props.store.verifyUser;
+    const { ctx } = this.state;
     if(error !== "" && this.state.error === "") {
       this.setState({
           error: INVALID_CODE_ERROR,
       })
       return undefined;
     }
-    if( email !== "" || token !=="" ){
+    if( email !== "" || token !== "" ){
       saveState("token", token);
+      if (ctx !== undefined && ctx === "forget") {
+        this.props.history.push("/forget");
+        return undefined;
+      }
       this.props.history.push("/home");
     }
   }
@@ -79,7 +102,8 @@ class VerifyContainer extends Component{
       />
     )
   }
-  getContext(ctx){
+  getContext(){
+    const { ctx } = this.state;
     switch(ctx){
       case "signup":
         return <span><p>Thank you!</p><p>We have sent a verification code to your email address.</p></span>;
@@ -92,11 +116,10 @@ class VerifyContainer extends Component{
     }
   }
   render() {
-    let ctx = this.props.location.state.context;
     return (
       <div className="step-1">
         <p className="text-header">studybox.io</p>
-        <div className="text-email">{this.getContext(ctx)}</div>
+        <div className="text-email">{this.getContext()}</div>
           {this.getView()}
       </div>
     )

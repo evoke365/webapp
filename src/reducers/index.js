@@ -1,7 +1,6 @@
 import authEmail from './email'
 import newSignup from './signup'
 import authPassword from './password'
-import forgetPassword from './forget'
 import newPassword from './newpwd'
 import verifyUser from './verify'
 import note from './note'
@@ -13,7 +12,6 @@ const childReducers = combineReducers({
 	authEmail,
 	newSignup,
 	authPassword,
-	forgetPassword,
 	newPassword,
 	verifyUser,
 	note,

@@ -41,6 +41,12 @@ class LoginContainer extends Component{
         state: { context: "login" }
       });
     }
+    if (action === "forget") {
+      this.props.history.push({
+        pathname: "/verify",
+        state: { context: "forget" }
+      });
+    }
     if (error !== "") {
       this.props.clearError();
       this.setState({
@@ -69,10 +75,6 @@ class LoginContainer extends Component{
   onForget(){
     const { email } = this.state;
     this.props.forgetPassword(email);
-    this.props.history.push({
-      pathname: "/verify",
-      state: { context: "forget" }
-    });
   }
   getView(){
     return (

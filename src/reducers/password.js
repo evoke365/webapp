@@ -1,5 +1,6 @@
 import {
   VALIDATE_PASSWORD, VALIDATE_PASSWORD_SUCCESS, VALIDATE_PASSWORD_FAIL, 
+  FORGET_PASSWORD, FORGET_PASSWORD_SUCCESS, FORGET_PASSWORD_FAIL,
   CLEAR_ERROR
 } from '../actions/login'
 
@@ -11,6 +12,7 @@ const initialState = {
 }
 
 export default function authPassword(state = initialState, action){
+  console.log(action)
   switch (action.type) {
     case VALIDATE_PASSWORD:
       return {
@@ -33,6 +35,35 @@ export default function authPassword(state = initialState, action){
       },
     };
     case VALIDATE_PASSWORD_FAIL:
+    return {
+      ...state,
+      ...{
+        token: "",
+        error: "internal error",
+        loading: false,
+        action: "",
+      },
+    };
+    case FORGET_PASSWORD:
+      return {
+        ...state,
+        ...{
+          token: "",
+          error: "",
+          loading: true,
+          action: "",
+        },
+      };
+    case FORGET_PASSWORD_SUCCESS:
+    return {
+      ...state,
+      ...{
+        action: action.payload.action,
+        error: "",
+        loading: false,
+      },
+    };
+    case FORGET_PASSWORD_FAIL:
     return {
       ...state,
       ...{

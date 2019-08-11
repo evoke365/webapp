@@ -17,9 +17,6 @@ class ForgetContainer extends Component{
   componentDidMount() {
     let email = loadState("email")
     let token = loadState("token");
-    if (email !== undefined && token !== undefined) {
-      this.props.history.push("/home");
-    }
     if(email === undefined) {
       this.props.history.push("/");
       return undefined;
@@ -88,7 +85,7 @@ class ForgetContainer extends Component{
     return (
       <div className="step-1">
         <p className="text-header">studybox.io</p>
-        <p className="text-email">Enter your new password</p>
+        <p className="text-email">Thank you! <br /> Enter your new password:</p>
           {this.getView()}
       </div>
     )
