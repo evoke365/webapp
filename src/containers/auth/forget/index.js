@@ -13,6 +13,7 @@ class ForgetContainer extends Component{
     email: "",
     password: "",
     error: "",
+    token: "",
   }
   componentDidMount() {
     let email = loadState("email")
@@ -27,7 +28,8 @@ class ForgetContainer extends Component{
     }
     this.setState({
       email: email,
-    })
+      token: token
+    });
   }
   componentDidUpdate() {
     const { success } = this.props.store.newPassword;
@@ -36,8 +38,8 @@ class ForgetContainer extends Component{
         // redirect to verify
         saveState("password", this.state.password)
         this.props.history.push({
-          pathname: "/verify",
-          state: { context: "signup" }
+          pathname: "/home",
+          state: { context: "forget" }
         });
         break;
       default:
@@ -51,7 +53,7 @@ class ForgetContainer extends Component{
     }
   }
   onSubmit(){
-    const { email, password } = this.state;
+    const { email, password, token } = this.state;
     // TODO: Add password validation
     if (password === "") {
       this.setState({
@@ -60,32 +62,34 @@ class ForgetContainer extends Component{
       return undefined;
     }
     // TODO: handle http error
-    this.props.newPassword(email, password);
+    this.props.newPassword(email, token, password);
   }
   getView(){
     return (
-      <PasswordContainer
-        onKeyDown={(e)=>{
-          if(e.keyCode === 13){
-              this.onSubmit();
-            }
-        }}
-        onChange={(e)=>{
-          this.setState({
-              password: e.target.value,
-              error: "",
-        })}}
-        onSubmit={() => this.onSubmit()}
-        error={this.state.error}
-        loading={this.props.store.newSignup.loading}
-      />
+      <>
+        <p className="text-email">Thank you! <br /> Enter your new password:</p>
+        <PasswordContainer
+          onKeyDown={(e)=>{
+            if(e.keyCode === 13){
+                this.onSubmit();
+              }
+          }}
+          onChange={(e)=>{
+            this.setState({
+                password: e.target.value,
+                error: "",
+          })}}
+          onSubmit={() => this.onSubmit()}
+          error={this.state.error}
+          loading={this.props.store.newPassword.loading}
+        />
+      </>
     );
   }
   render() {
     return (
       <div className="step-1">
         <p className="text-header">studybox.io</p>
-        <p className="text-email">Thank you! <br /> Enter your new password:</p>
           {this.getView()}
       </div>
     )

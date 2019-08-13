@@ -248,6 +248,10 @@ hr {
   right: 0;
 }
 
+.toBottom {
+  width: 100%;
+}
+
 .container-c {
   position: absolute;
   height: 103px;

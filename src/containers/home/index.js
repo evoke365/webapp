@@ -20,10 +20,6 @@ const override = css`
   position: absolute;
   bottom: 0;
 `;
-const toBottom = css`
-  height: 600,
-  width: 400
-`;
 
 class HomeContainer extends Component{
   state = {
@@ -121,7 +117,7 @@ class HomeContainer extends Component{
           {this.getNavContainer()}
         </div>
         <div className="container-b">
-          <ScrollToBottom className={ toBottom }>
+          <ScrollToBottom className="toBottom">
             <ReactCSSTransitionGroup 
               transitionName="animated"
               transitionAppear={true}
