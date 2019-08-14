@@ -7,7 +7,6 @@ import { logout } from '../../actions/logout'
 import { loadState } from '../../localStorage'
 import NoteContainer from './note'
 import NavContainer from './nav'
-import {slide as Menu} from 'react-burger-menu';
 import { css } from '@emotion/core';
 import BarLoader from 'react-spinners/BarLoader';
 import ScrollToBottom from 'react-scroll-to-bottom';
@@ -110,9 +109,6 @@ class HomeContainer extends Component{
     const { loading } = this.props.store.note;
     return (
       <div>
-        <Menu>
-          {this.getNavContainer()}
-        </Menu>
         <div className="container-a">
           {this.getNavContainer()}
         </div>
@@ -164,7 +160,7 @@ class HomeContainer extends Component{
           </textarea>
           <button disabled={keyword.length === 0 || answer.length === 0 || loading} tabIndex="0" className={getButtonClassName(keyword, answer)} 
           onClick={(e) => {this.onSubmitNote()}}>
-            <p>add note</p>
+            <p>add</p>
           </button>
         </div>
       </div>

@@ -98,13 +98,9 @@ hr {
 }
 
 .a-text {
-  float: left;
-  clear: both;
-  width: 100%;
+  float: right;
+  padding: 8px;
   font-size: .8em;
-  text-align: center;
-  color: rgb(0, 0, 0);
-  font-weight: 100;
   color: rgb(0, 0, 0);
 }
 
@@ -164,15 +160,12 @@ hr {
 
 /* Home page CSS */
 .container-a {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20%;
-  min-width: 46px;
-  height: 100%;
-  padding-top:20px;
-  background-color: rgb(251, 167, 59);
-  overflow-y: auto;
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px;
+  border-style: dotted;
+  border-color: rgb(244, 244, 244);
+  padding: 8px;
 }
 
 
@@ -184,13 +177,12 @@ hr {
 
 .text-title {
   float: left;
-  width: 100%;
-
+  width: 200px;
   font-weight: 100;
   font-style: italic;
   font-size: 1.4em;
-  text-align: center;
-  color: rgb(0, 0, 0);
+  margin-left: 25px;
+  color: rgb(251, 167, 59);
 }
 
 .container-booklets {
@@ -242,9 +234,9 @@ hr {
 .container-b {
   display: flex;
   position: absolute;
-  top: 10px;
+  width: 100%;
+  top: 60px;
   bottom: 103px;
-  left: 20%;
   right: 0;
 }
 
@@ -256,7 +248,7 @@ hr {
   position: absolute;
   height: 103px;
   bottom:0;
-  left: 20%;
+  left: 0;
   right: 0;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -271,7 +263,7 @@ hr {
   float: left;
   width: 25.3424657534%;
   height: 73px;
-  margin-left: 2.18036%;
+  margin-left: 2.5%;
   padding: 5px;
   border: 1px solid rgb(251, 167, 59);
   background-color: rgb(230, 230, 230);
@@ -292,7 +284,7 @@ hr {
   float: left;
   width: 50%;
   height: 73px;
-  margin-left: 1.98036%;
+  margin-left: 2.5%;
   padding: 5px;
   border: 1px solid rgb(251, 167, 59);
   background-color: rgb(230, 230, 230);
@@ -313,7 +305,7 @@ hr {
   float: left;
   width: 13.5844748858%;
   height: 73px;
-  margin-left: 2.17143%;
+  margin-left: 2.5%;
   background-color: rgb(251, 167, 59);
   font-size: 1em;
   font-weight: 100;
@@ -330,7 +322,7 @@ hr {
   float: left;
   width: 13.5844748858%;
   height: 73px;
-  margin-left: 2.17143%;
+  margin-left: 2.5%;
   background-color: rgb(233, 233, 233);
   font-size: 1em;
   font-weight: 100;
@@ -684,9 +676,6 @@ div.container-nw:hover .btn-panel-hidden{
 }
 
 @media screen and (max-width: 940px) {
-  .container-a {
-    display: none;
-  }
   .container-b {
     left: 0px;
   }
