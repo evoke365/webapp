@@ -16,6 +16,7 @@ const override = css`
   margin: 0 auto;
   border-color: red;
   width: 100%;
+  height: 2px;
   position: absolute;
   bottom: 0;
 `;

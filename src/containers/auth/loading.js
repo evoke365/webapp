@@ -9,6 +9,7 @@ const override = css`
     border-color: red;
     max-width: 600px;
     width: 80%;
+    height: 2px;
 `;
 
 const LoadingContainer = ({ isLoading }) => (

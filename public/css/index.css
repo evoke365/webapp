@@ -177,7 +177,7 @@ hr {
 
 .text-title {
   float: left;
-  width: 200px;
+  width: 150px;
   font-weight: 100;
   font-style: italic;
   font-size: 1.4em;
@@ -238,6 +238,7 @@ hr {
   top: 60px;
   bottom: 103px;
   right: 0;
+  padding:0px 10px 0px 10px;
 }
 
 .toBottom {
