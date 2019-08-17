@@ -94,10 +94,8 @@ class HomeContainer extends Component{
     );
   }
   getNavContainer() {
-    let email = loadState("email");
     return (
-      <NavContainer 
-        email={email}
+      <NavContainer
         onLogout={()=>{
           this.props.logout();
           this.props.history.push("/");
