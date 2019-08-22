@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { submitEmail } from '../../actions/login'
 import EmailContainer from './email'
 import { loadState, saveState } from '../../localStorage'
+import { withStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid';
 
 const INVALID_EMAIL_ERROR = "Let’s try that again, the email address you have entered is invalid."
 
@@ -68,10 +70,16 @@ class AuthContainer extends Component{
     );
   }
   render() {
+    const { classes } = this.props;
     return (
-      <div className="step-1">
-        <p className="text-header">studybox.io</p>
-        {this.getView()}
+      <div className={classes.container}>
+        <p className={classes.header}>studybox.io</p>
+        <div className={classes.body}></div>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            {this.getView()}
+          </Grid>
+        </Grid>
       </div>
     )
   }
@@ -89,7 +97,28 @@ function mapDispatchToProps(dispatch) {
   return Object.assign({}, bindActionCreators({ submitEmail }, dispatch))
 }
 
+const style = theme => ({
+  container: {
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    maxWidth: '1024px',
+  },
+  header: {
+    minHeight: '55px',
+    fontSize: '2em',
+    fontWeight: '300',
+    fontStyle: 'italic',
+    color: '#000000',
+    paddingTop: '15px',
+    marginBottom: '30px',
+    marginLeft: '-3px',
+  },
+  body: {
+    flexGrow: 1,
+  }
+})
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AuthContainer)
+)(withStyles(style)(AuthContainer))
