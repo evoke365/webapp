@@ -77,7 +77,7 @@ class AuthContainer extends Component{
           <p className={classes.logo}>studybox.io</p>
         </div>
         <div className={classes.body}></div>
-        <Grid container spacing={3}>
+        <Grid container>
           <Grid item xs={12}>
             {this.getView()}
           </Grid>

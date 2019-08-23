@@ -23,6 +23,9 @@ const EmailContainer = ({
     <div>
       <button disabled={loading} className={classes.btn} onClick={onNext}>next</button>
     </div>
+    <div>
+      <p></p>
+    </div>
   </div>
 );
 
@@ -37,7 +40,7 @@ EmailContainer.propTypes = {
 
 const style = theme => ({
   container: {
-    padding: '50px',
+    padding: '50px 20px',
     textAlign: 'center',
   },
   heading: {
