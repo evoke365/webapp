@@ -111,7 +111,7 @@ const style = theme => ({
     color: '#000000',
     paddingTop: '15px',
     marginBottom: '30px',
-    marginLeft: '-3px',
+    marginLeft: '10px',
   },
   body: {
     flexGrow: 1,
