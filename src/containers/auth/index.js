@@ -73,7 +73,9 @@ class AuthContainer extends Component{
     const { classes } = this.props;
     return (
       <div className={classes.container}>
-        <p className={classes.header}>studybox.io</p>
+        <div className={classes.header}>
+          <p className={classes.logo}>studybox.io</p>
+        </div>
         <div className={classes.body}></div>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -104,13 +106,16 @@ const style = theme => ({
     maxWidth: '1024px',
   },
   header: {
+    paddingTop: '15px',
+    marginBottom: '30px',
+    marginLeft: '-3px',
+  },
+  logo: {
     minHeight: '55px',
     fontSize: '2em',
     fontWeight: '300',
     fontStyle: 'italic',
     color: '#000000',
-    paddingTop: '15px',
-    marginBottom: '30px',
     marginLeft: '10px',
   },
   body: {
