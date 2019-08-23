@@ -40,7 +40,7 @@ EmailContainer.propTypes = {
 
 const style = theme => ({
   container: {
-    padding: '50px 20px',
+    padding: '50px 30px',
     textAlign: 'center',
   },
   heading: {
