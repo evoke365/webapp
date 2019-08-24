@@ -23,8 +23,11 @@ const EmailContainer = ({
     <div>
       <button disabled={loading} className={classes.btn} onClick={onNext}>next</button>
     </div>
-    <div>
-      <p></p>
+    <div className={classes.feeder} >
+      <p className={classes.feederText} >Information is lost over time unless we make an effort to retain it. 
+      The simplest method of retention is revision. With Studybox you don’t have to ever find the time to revisit your notes. 
+      Your notes come straight to your inbox at the right time.
+      </p>
     </div>
   </div>
 );
@@ -76,6 +79,15 @@ const style = theme => ({
     borderRadius: '2px',
     backgroundColor: 'rgb(251, 167, 59)',
     fontSize: '1.667em',
+  },
+  feeder: {
+    backgroundColor: '#eaeaea',
+    width: '100%',
+    marginTop: '30px',
+  },
+  feederText: {
+    textAlign: 'left',
+    padding: '27px 40px',
   }
 })
 
