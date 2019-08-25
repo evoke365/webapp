@@ -83,7 +83,8 @@ const style = theme => ({
   feeder: {
     backgroundColor: '#eaeaea',
     width: '100%',
-    marginTop: '30px',
+    marginTop: '40px',
+    border: '1px solid rgb(251, 167, 59)',
   },
   feederText: {
     textAlign: 'left',
