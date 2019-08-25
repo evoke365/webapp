@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 var FontAwesome = require('react-fontawesome');
 
-const NoteContainer = ({note, onDeleteNote, loading}) => (
+const NoteContainer = ({note, onDeleteNote, onMarkImportant, loading}) => (
   <div>
     <div className="container-nw">
       <div className="container-text">
@@ -15,7 +15,8 @@ const NoteContainer = ({note, onDeleteNote, loading}) => (
           <button 
           title="Beat the forgetting curve! When turned, this note is scheduled for revised."
           tabIndex="-1" 
-          className={note.Important ? '_button btn-panel-button calendar-check' : '_button btn-panel-button calendar-uncheck'}>
+          className={note.Important ? '_button btn-panel-button calendar-check' : '_button btn-panel-button calendar-uncheck'}
+          onClick={onMarkImportant}>
             <FontAwesome name="calendar-check-o"/>
           </button>
         </div>
@@ -33,6 +34,7 @@ const NoteContainer = ({note, onDeleteNote, loading}) => (
 NoteContainer.propTypes = {
     note: PropTypes.object.isRequired,
     onDeleteNote: PropTypes.func.isRequired,
+    onMarkImportant: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
 }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getNotes, submitNote, deleteNote } from '../../actions/home'
+import { getNotes, submitNote, deleteNote, markNotes } from '../../actions/home'
 import { logout } from '../../actions/logout'
 import { loadState } from '../../localStorage'
 import NoteContainer from './note'
@@ -83,12 +83,17 @@ class HomeContainer extends Component{
       }
     }
   }
+  onMarkImportant(noteId, index, isImportant) {
+    let token = loadState("token");
+    this.props.markNotes(noteId, token, isImportant, index)
+  }
   getNoteConatiner(note, index, loading) {
     return (
       <NoteContainer
         key={note.Id}
         note={note}
         onDeleteNote={() => this.onDeleteNote(note.Id, index)}
+        onMarkImportant={() => this.onMarkImportant(note.Id, index, !note.Important)}
         loading={loading}
       />
     );
@@ -179,7 +184,7 @@ function mapStateToProps(store, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ getNotes, submitNote, deleteNote, logout }, dispatch))
+  return Object.assign({}, bindActionCreators({ getNotes, submitNote, deleteNote, markNotes, logout }, dispatch))
 }
 
 export default connect(
