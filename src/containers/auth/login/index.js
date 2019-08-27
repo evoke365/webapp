@@ -5,6 +5,8 @@ import { submitPassword, forgetPassword, clearError } from '../../../actions/log
 import { logout } from '../../../actions/logout'
 import { loadState, saveState } from '../../../localStorage'
 import PasswordContainer from '../password'
+import Slide from '@material-ui/core/Slide';
+import { withStyles } from '@material-ui/core/styles'
 
 const INVALID_PASSWORD_ERROR = "Whoops... the password you have entered is incorrect or invalid."
 
@@ -99,15 +101,24 @@ class LoginContainer extends Component{
   }
   render() {
     let email = loadState("email");
+    const { classes } = this.props;
     return (
-      <div className="step-1">
-        <p className="text-header">studybox.io</p>
-        <p className="text-email">Welcome back, {email}</p>
-        {this.getView()}
-      </div>
+      <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+        <div className="step-1">
+          <p className="text-header">studybox.io</p>
+          <p className={classes.message}>Welcome back, {email}</p>
+          {this.getView()}
+        </div>
+      </Slide>
     )
   }
 }
+
+const style = theme => ({
+  message: {
+    textAlign: 'center',
+  }
+})
 
 function mapStateToProps(store, props) {
   return {store,props}
@@ -120,4 +131,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginContainer)
+)(withStyles(style)(LoginContainer))

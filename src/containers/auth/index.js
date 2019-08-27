@@ -112,10 +112,10 @@ const style = theme => ({
   },
   logo: {
     minHeight: '55px',
-    fontSize: '2em',
+    fontSize: '1.6em',
     fontWeight: '300',
     fontStyle: 'italic',
-    color: '#000000',
+    color: 'rgb(251, 167, 59)',
     marginLeft: '10px',
   },
   body: {
