@@ -103,13 +103,19 @@ class LoginContainer extends Component{
     let email = loadState("email");
     const { classes } = this.props;
     return (
-      <Slide direction="up" in={true} mountOnEnter unmountOnExit>
         <div className="step-1">
-          <p className="text-header">studybox.io</p>
-          <p className={classes.message}>Welcome back, {email}</p>
-          {this.getView()}
+          <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+            <div>
+              <p className="text-header">studybox.io</p>
+              <p className={classes.message}>Welcome back, {email}</p>
+            </div>
+          </Slide>
+          <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+            <div>
+              {this.getView()}
+            </div>
+          </Slide>
         </div>
-      </Slide>
     )
   }
 }
