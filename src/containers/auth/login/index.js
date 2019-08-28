@@ -103,11 +103,14 @@ class LoginContainer extends Component{
     let email = loadState("email");
     const { classes } = this.props;
     return (
-        <div className="step-1">
+      
+        <div className={classes.container}>
           <Slide direction="down" in={true} mountOnEnter unmountOnExit>
-            <div>
-              <p className="text-header">studybox.io</p>
-              <p className={classes.message}>Welcome back, {email}</p>
+            <div className={classes.heading}>
+              <div className={classes.headingContent}>
+                <div className={classes.message}>Welcome back,</div>
+                <div className={classes.username}>{email}</div>
+              </div>
             </div>
           </Slide>
           <Slide direction="up" in={true} mountOnEnter unmountOnExit>
@@ -121,9 +124,32 @@ class LoginContainer extends Component{
 }
 
 const style = theme => ({
+  container: {
+    display: 'block',
+    height: '100%',
+    position: 'relative',
+  },
   message: {
-    textAlign: 'center',
-  }
+    fontSize: '3.8em',
+    maxWidth: '500px',
+    display: 'block',
+    width: 'auto',
+    float: 'left',
+    marginRight: '30px',
+    color: '#000000',
+  },
+  username: {
+    fontSize: '1.4em',
+    color: '#000000',
+    opacity: '0.5',
+    position: 'relative',
+    top: '45px',
+  },
+  heading: {
+    position: 'relative',
+    minHeight: '150px',
+    padding: '30px',
+  },
 })
 
 function mapStateToProps(store, props) {

@@ -1,3 +1,6 @@
+html, body {
+  height: 100%;
+}
 body {
   background-color: rgb(255, 255, 255);
   font: 400 1.125em/1.38 'Open Sans';
@@ -9,6 +12,9 @@ hr {
   border: 0;
   border-top: 1px solid rgb(251, 167, 59);
   padding: 0px;
+}
+#root {
+  height: 100%;
 }
 .text-error {
   min-height: 32px;
@@ -68,14 +74,14 @@ hr {
   color: rgb(251, 167, 59);
 }
 
-.step-1 ._input {
+._input {
   display: block;
-  width: 80%;
+  width: 100%;
   max-width: 600px;
   height: 60px;
   margin: 0 auto;
   border-bottom: 1px solid rgb(251, 167, 59);
-  font-size: 1.667em;
+  font-size: 25px;
   font-weight: 300;
   text-align: center;
   color: rgb(0, 0, 0);

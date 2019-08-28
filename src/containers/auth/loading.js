@@ -8,7 +8,7 @@ const override = css`
     margin: 0 auto;
     border-color: red;
     max-width: 600px;
-    width: 80%;
+    width: 100%;
     height: 2px;
 `;
 
