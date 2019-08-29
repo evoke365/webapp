@@ -115,7 +115,7 @@ const style = theme => ({
     marginRight: 'auto',
     marginLeft: 'auto',
     maxWidth: '1024px',
-    padding: '10%',
+    paddingTop: '10%',
   },
   header: {
     textAlign: 'center',
