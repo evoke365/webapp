@@ -5,6 +5,8 @@ import { newPassword } from '../../../actions/forget'
 import { logout } from '../../../actions/logout'
 import { loadState, saveState } from '../../../localStorage'
 import PasswordContainer from '../password'
+import { withStyles } from '@material-ui/core/styles'
+import Slide from '@material-ui/core/Slide';
 
 const INVALID_PASSWORD_ERROR = "Let’s try that again, the password you have entered is invalid."
 
@@ -66,35 +68,69 @@ class ForgetContainer extends Component{
   }
   getView(){
     return (
-      <>
-        <p className="text-email">Thank you! <br /> Enter your new password:</p>
-        <PasswordContainer
-          onKeyDown={(e)=>{
-            if(e.keyCode === 13){
-                this.onSubmit();
-              }
-          }}
-          onChange={(e)=>{
-            this.setState({
-                password: e.target.value,
-                error: "",
-          })}}
-          onSubmit={() => this.onSubmit()}
-          error={this.state.error}
-          loading={this.props.store.newPassword.loading}
-        />
-      </>
+      <PasswordContainer
+        onKeyDown={(e)=>{
+          if(e.keyCode === 13){
+              this.onSubmit();
+            }
+        }}
+        onChange={(e)=>{
+          this.setState({
+              password: e.target.value,
+              error: "",
+        })}}
+        onSubmit={() => this.onSubmit()}
+        error={this.state.error}
+        loading={this.props.store.newPassword.loading}
+      />
     );
   }
   render() {
+    const { classes } = this.props;
     return (
-      <div className="step-1">
-        <p className="text-header">studybox.io</p>
-          {this.getView()}
+      <div className={classes.container}>
+         <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+          <div>
+            <div className={classes.header}>
+              <p className={classes.logo}>studybox.io</p>
+            </div>
+            <div className={classes.message}>Thank you! <br /> Enter your new password:</div>
+          </div>
+        </Slide>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <div>
+            {this.getView()}
+          </div>
+        </Slide>
       </div>
     )
   }
 }
+
+const style = theme => ({
+  container: {
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    maxWidth: '1024px',
+    paddingTop: '10%',
+  },
+  header: {
+    textAlign: 'center',
+  },
+  message: {
+    fontSize: '1.2em',
+    color: '#000000',
+    textAlign: 'center',
+  },
+  logo: {
+    minHeight: '55px',
+    fontSize: '2em',
+    fontWeight: '300',
+    fontStyle: 'italic',
+    color: 'rgb(251, 167, 59)',
+    marginLeft: '10px',
+  },
+})
 
 function mapStateToProps(store, props) {
   return {store,props}
@@ -107,4 +143,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ForgetContainer)
+)(withStyles(style)(ForgetContainer))
