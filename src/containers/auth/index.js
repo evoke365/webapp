@@ -106,13 +106,11 @@ const style = theme => ({
     maxWidth: '1024px',
   },
   header: {
-    paddingTop: '15px',
-    marginBottom: '30px',
-    marginLeft: '-3px',
+    textAlign: 'center',
   },
   logo: {
     minHeight: '55px',
-    fontSize: '1.6em',
+    fontSize: '2em',
     fontWeight: '300',
     fontStyle: 'italic',
     color: 'rgb(251, 167, 59)',

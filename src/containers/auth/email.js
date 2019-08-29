@@ -8,26 +8,20 @@ const EmailContainer = ({
 }) => (
   <div className={classes.container}>
     <div className={classes.heading}>
-      <p>Put whatever you want to remember in your Studybox</p>
+      <p>Remember everything</p>
     </div>
-    <p className={classes.text}>Enter your email to sign up or sign in:</p>
-    <input 
-      className={classes.input+(error === "" ? "" : " incorrect-input")} 
-      placeholder="Your email eddress"
-      type="text" 
-      title="Use an email that is accessable on your mobile device."
-      onKeyDown={onKeyDown} 
-      onChange={onChange} />
-    <LoadingContainer isLoading={loading}/>
-    <p className={"text-error" + (error === "" ? "" : " text-error-visible" )}>{error}</p>
-    <div>
+    <div className={classes.body}>
+      <p className={classes.text}>Enter your email to sign up or sign in:</p>
+      <input 
+        className={classes.input+(error === "" ? "" : " incorrect-input")} 
+        placeholder="Your email eddress"
+        type="text" 
+        title="Use an email that is accessable on your mobile device."
+        onKeyDown={onKeyDown} 
+        onChange={onChange} />
+      <LoadingContainer isLoading={loading}/>
+      <p className={"text-error" + (error === "" ? "" : " text-error-visible" )}>{error}</p>
       <button disabled={loading} className={classes.btn} onClick={onNext}>next</button>
-    </div>
-    <div className={classes.feeder} >
-      <p className={classes.feederText} >Information is lost over time unless we make an effort to retain it. 
-      The simplest method of retention is revision. With Studybox you don’t have to ever find the time to revisit your notes. 
-      Your notes come straight to your inbox at the right time.
-      </p>
     </div>
   </div>
 );
@@ -43,7 +37,6 @@ EmailContainer.propTypes = {
 
 const style = theme => ({
   container: {
-    padding: '50px 30px',
     textAlign: 'center',
   },
   heading: {
@@ -79,16 +72,6 @@ const style = theme => ({
     borderRadius: '2px',
     backgroundColor: 'rgb(251, 167, 59)',
     fontSize: '1.667em',
-  },
-  feeder: {
-    backgroundColor: '#eaeaea',
-    width: '100%',
-    marginTop: '40px',
-    border: '1px solid rgb(251, 167, 59)',
-  },
-  feederText: {
-    textAlign: 'left',
-    padding: '27px 40px',
   }
 })
 
