@@ -41,39 +41,6 @@ hr {
   text-align: center
 }
 
-.step-1 .container-email-and-button {
-  margin-top: 50px;
-  text-align: center;
-}
-
-.step-1 .text-error {
-  font-style: italic;
-}
-
-.step-1 .text-header {
-  margin-top: 75px;
-}
-
-.step-1 ._button {
-    display: block;
-    width: 80%;
-    max-width: 600px;
-    height: 60px;
-    margin: 0 auto;
-    margin-top: 20px;
-    border-radius: 2px;
-    background-color: rgb(251, 167, 59);
-    font-size: 1.667em;
-}
-
-.step-1 ._link {
-  display: block;
-  margin: 0 auto;
-  font-size: 15px;
-  margin-top: 20px;
-  color: rgb(251, 167, 59);
-}
-
 ._input {
   display: block;
   width: 100%;
@@ -87,80 +54,10 @@ hr {
   color: rgb(0, 0, 0);
 }
 
-.step-2 {
-  margin-top: 50px;
-}
-
-.step-2 .text-email {
-  float: left;
-  clear: both;
-  width: 100%;
-  min-height: 34px;
-  margin-top: 24px;
-  font-size: 16px;
-  text-align: center;
-  color: rgb(0, 0, 0);
-  font-weight: 100;
-}
-
 .a-text {
   float: right;
   padding: 8px;
   font-size: .8em;
-  color: rgb(0, 0, 0);
-}
-
-.step-2 .text-error {
-  float: left;
-  clear: both;
-  width: 100%;
-  margin-top: 3px;
-  font-style: italic;
-  font-weight:100;
-}
-
-.step-2 .text-header {
-  float: left;
-  width: 100%;
-  margin-top: 25px;
-}
-
-.step-2 ._button {
-  display: block;
-  width: 80%;
-  max-width: 600px;
-  height: 60px;
-  margin: 0 auto;
-  margin-top: 60px;
-  border-radius: 2px;
-  background-color: rgb(251, 167, 59);
-  font-size: 1.667em;
-}
-
-.step-2 ._button_disabled {
-  display: block;
-  width: 80%;
-  max-width: 600px;
-  height: 60px;
-  margin: 16px auto 0;
-  border-radius: 3px;
-  background-color: rgb(233, 233, 233);
-  font-size: 1.667em;
-   font-weight:100;
-  text-align: center;
-  color: rgb(0, 0, 0);
-}
-
-.step-2 ._input {
-  display: block;
-  width: 80%;
-  max-width: 600px;
-  height: 60px;
-  margin: 0 auto;
-  border-bottom: 1px solid rgb(251, 167, 59);
-  font-size: 1.667em;
-  font-weight: 300;
-  text-align: center;
   color: rgb(0, 0, 0);
 }
 
