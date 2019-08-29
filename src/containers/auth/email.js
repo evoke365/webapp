@@ -7,9 +7,6 @@ const EmailContainer = ({
     classes, onKeyDown, onChange, onNext, error, loading
 }) => (
   <div className={classes.container}>
-    <div className={classes.heading}>
-      <p>Remember everything</p>
-    </div>
     <div className={classes.body}>
       <p className={classes.text}>Enter your email to sign up or sign in:</p>
       <input 
@@ -39,14 +36,6 @@ const style = theme => ({
   container: {
     textAlign: 'center',
   },
-  heading: {
-    marginBottom: '30px',
-    maxWidth: '700px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    fontSize: '2.5em',
-    fontWeight: '900',
-  },
   input: {
     display: 'block',
     width: '100%',
@@ -54,7 +43,7 @@ const style = theme => ({
     height: '60px',
     margin: '0 auto',
     borderBottom: '1px solid rgb(251, 167, 59)',
-    fontSize: '1.667em',
+    fontSize: '1.5em',
     fontWeight: '300',
     textAlign: 'center',
     color: 'rgb(0, 0, 0)',

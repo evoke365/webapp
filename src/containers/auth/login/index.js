@@ -103,52 +103,47 @@ class LoginContainer extends Component{
     let email = loadState("email");
     const { classes } = this.props;
     return (
-      
-        <div className={classes.container}>
-          <Slide direction="down" in={true} mountOnEnter unmountOnExit>
-            <div className={classes.heading}>
-              <div className={classes.headingContent}>
-                <div className={classes.message}>Welcome back,</div>
-                <div className={classes.username}>{email}</div>
-              </div>
+      <div className={classes.container}>
+        <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+          <div>
+            <div className={classes.header}>
+              <p className={classes.logo}>studybox.io</p>
             </div>
-          </Slide>
-          <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-            <div>
-              {this.getView()}
-            </div>
-          </Slide>
-        </div>
+              <div className={classes.message}>Welcome back, {email}</div>
+          </div>
+        </Slide>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <div>
+            {this.getView()}
+          </div>
+        </Slide>
+      </div>
     )
   }
 }
 
 const style = theme => ({
   container: {
-    display: 'block',
-    height: '100%',
-    position: 'relative',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    maxWidth: '1024px',
+    paddingTop: '10%',
+  },
+  header: {
+    textAlign: 'center',
   },
   message: {
-    fontSize: '3.8em',
-    maxWidth: '500px',
-    display: 'block',
-    width: 'auto',
-    float: 'left',
-    marginRight: '30px',
+    fontSize: '1.2em',
     color: '#000000',
+    textAlign: 'center',
   },
-  username: {
-    fontSize: '1.4em',
-    color: '#000000',
-    opacity: '0.5',
-    position: 'relative',
-    top: '45px',
-  },
-  heading: {
-    position: 'relative',
-    minHeight: '150px',
-    padding: '30px',
+  logo: {
+    minHeight: '55px',
+    fontSize: '2em',
+    fontWeight: '300',
+    fontStyle: 'italic',
+    color: 'rgb(251, 167, 59)',
+    marginLeft: '10px',
   },
 })
 

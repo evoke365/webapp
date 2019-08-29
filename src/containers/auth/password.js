@@ -8,7 +8,7 @@ const PasswordContainer = ({classes, onKeyDown, onChange, onSubmit, onForget, er
     <input 
       onChange={onChange}        
       onKeyDown={onKeyDown}
-      className={"_input" + (error ? " incorrect-input" : "")} 
+      className={classes.input + (error ? " incorrect-input" : "")} 
       type="password" 
       placeholder="Your password" 
     />
@@ -36,17 +36,20 @@ const PasswordContainer = ({classes, onKeyDown, onChange, onSubmit, onForget, er
 const style = theme => ({
   container: {
     display: 'block',
-    maxWidth: '500px',
+    maxWidth: '600px',
     margin: '0 auto',
-    marginTop: '100px',
   },
   input: {
+    display: 'block',
     width: '100%',
+    maxWidth: '600px',
     height: '60px',
-    padding: '0 20px',
-    lineHeight: '60px',
-    opacity: 0.6,
-    fontSize: '20px',
+    margin: '0 auto',
+    borderBottom: '1px solid rgb(251, 167, 59)',
+    fontSize: '1.5em',
+    fontWeight: '300',
+    textAlign: 'center',
+    color: 'rgb(0, 0, 0)',
   },
   btn: {
     width: '100%',

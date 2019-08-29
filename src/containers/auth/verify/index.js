@@ -5,6 +5,8 @@ import { submitCode } from '../../../actions/verify'
 import { logout } from '../../../actions/logout'
 import { loadState, saveState } from '../../../localStorage'
 import CodeContainer from '../code'
+import Slide from '@material-ui/core/Slide';
+import { withStyles } from '@material-ui/core/styles'
 
 const INVALID_CODE_ERROR = "The activation code you have enterred is invalid."
 
@@ -116,15 +118,51 @@ class VerifyContainer extends Component{
     }
   }
   render() {
+    const { classes } = this.props;
     return (
-      <div className="step-1">
-        <p className="text-header">studybox.io</p>
-        <div className="text-email">{this.getContext()}</div>
-          {this.getView()}
+      <div className={classes.container}>
+        <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+          <div>
+            <div className={classes.header}>
+              <p className={classes.logo}>studybox.io</p>
+            </div>
+              <div className={classes.message}>{this.getContext()}</div>
+          </div>
+        </Slide>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <div>
+            {this.getView()}
+          </div>
+        </Slide>
       </div>
     )
   }
 }
+
+const style = theme => ({
+  container: {
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    maxWidth: '1024px',
+    paddingTop: '10%',
+  },
+  header: {
+    textAlign: 'center',
+  },
+  message: {
+    fontSize: '1.2em',
+    color: '#000000',
+    textAlign: 'center',
+  },
+  logo: {
+    minHeight: '55px',
+    fontSize: '2em',
+    fontWeight: '300',
+    fontStyle: 'italic',
+    color: 'rgb(251, 167, 59)',
+    marginLeft: '10px',
+  },
+})
 
 function mapStateToProps(store, props) {
   return {store,props}
@@ -137,4 +175,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(VerifyContainer)
+)(withStyles(style)(VerifyContainer))

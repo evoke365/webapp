@@ -6,6 +6,7 @@ import EmailContainer from './email'
 import { loadState, saveState } from '../../localStorage'
 import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid';
+import Slide from '@material-ui/core/Slide';
 
 const INVALID_EMAIL_ERROR = "Let’s try that again, the email address you have entered is invalid."
 
@@ -73,15 +74,25 @@ class AuthContainer extends Component{
     const { classes } = this.props;
     return (
       <div className={classes.container}>
-        <div className={classes.header}>
-          <p className={classes.logo}>studybox.io</p>
-        </div>
-        <div className={classes.body}></div>
-        <Grid container>
-          <Grid item xs={12}>
-            {this.getView()}
-          </Grid>
-        </Grid>
+        <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+          <div>
+            <div className={classes.header}>
+              <p className={classes.logo}>studybox.io</p>
+            </div>
+            <div className={classes.heading}>
+              <p>Remember everything</p>
+            </div>
+          </div>
+        </Slide>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <div className={classes.body}>
+            <Grid container>
+              <Grid item xs={12}>
+                {this.getView()}
+              </Grid>
+            </Grid>
+          </div>
+        </Slide>
       </div>
     )
   }
@@ -104,8 +115,18 @@ const style = theme => ({
     marginRight: 'auto',
     marginLeft: 'auto',
     maxWidth: '1024px',
+    padding: '10%',
   },
   header: {
+    textAlign: 'center',
+  },
+  heading: {
+    marginBottom: '30px',
+    maxWidth: '700px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    fontSize: '2.5em',
+    fontWeight: '900',
     textAlign: 'center',
   },
   logo: {
@@ -118,7 +139,7 @@ const style = theme => ({
   },
   body: {
     flexGrow: 1,
-  }
+  },
 })
 
 export default connect(
