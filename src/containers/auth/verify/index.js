@@ -8,7 +8,7 @@ import CodeContainer from '../code'
 import Slide from '@material-ui/core/Slide';
 import { withStyles } from '@material-ui/core/styles'
 
-const INVALID_CODE_ERROR = "The activation code you have enterred is invalid."
+const INVALID_CODE_ERROR = "The activation code you have entered is invalid."
 
 class VerifyContainer extends Component{
   state = {
