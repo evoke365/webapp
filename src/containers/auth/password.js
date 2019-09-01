@@ -59,7 +59,7 @@ const style = theme => ({
     color: '#000000',
   },
   forget: {
-    textAlign: 'right',
+    textAlign: 'center',
   }
 })
 
