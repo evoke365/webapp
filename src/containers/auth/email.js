@@ -8,10 +8,10 @@ const EmailContainer = ({
 }) => (
   <div className={classes.container}>
     <div className={classes.body}>
-      <p className={classes.text}>Enter your email to sign up or sign in:</p>
+      <p className={classes.text}>Sign up or Log in:</p>
       <input 
         className={classes.input+(error === "" ? "" : " incorrect-input")} 
-        placeholder="Your email eddress"
+        placeholder="Enter your email address"
         type="text" 
         title="Use an email that is accessable on your mobile device."
         onKeyDown={onKeyDown} 
