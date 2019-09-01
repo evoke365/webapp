@@ -12,7 +12,6 @@ const initialState = {
 }
 
 export default function authPassword(state = initialState, action){
-  console.log(action)
   switch (action.type) {
     case VALIDATE_PASSWORD:
       return {
