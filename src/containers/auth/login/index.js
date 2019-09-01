@@ -110,6 +110,7 @@ class LoginContainer extends Component{
               <p className={classes.logo}>studybox.io</p>
             </div>
             <div className={classes.message}>Welcome back, {email}</div>
+            
           </div>
         </Slide>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
