@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 const CodeContainer = ({classes, onKeyDown, onChange, onNext, error, loading}) => (
   <div className={classes.container}>
-    <input className={classes.input+(error === "" ? "" : " incorrect-input")} type="text" placeholder="Enter activation code" title="Enter the activation code in the email we have sent you"
+    <input className={classes.input+(error === "" ? "" : " incorrect-input")} type="text" placeholder="Enter activation code" title="Enter the activation code in the email we have sent you."
     onKeyDown={onKeyDown} 
     onChange={onChange} />
     <LoadingContainer isLoading={loading} />
