@@ -12,8 +12,7 @@ const EmailContainer = ({
       <input 
         className={classes.input+(error === "" ? "" : " incorrect-input")} 
         placeholder="Enter your email address"
-        type="text" 
-        title="Use an email that is accessable on your mobile device."
+        type="text"
         onKeyDown={onKeyDown} 
         onChange={onChange} />
       <LoadingContainer isLoading={loading}/>

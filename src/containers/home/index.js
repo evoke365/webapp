@@ -148,7 +148,7 @@ class HomeContainer extends Component{
             e.preventDefault(); 
             this.onKeySubmitNote(e.shiftKey, e.keyCode);
             }}}  
-          placeholder="keyword / question" title="Press [tab] to move to the next textbox." ref="keywordInput">
+          placeholder="keyword / question" ref="keywordInput">
           </textarea>
           <textarea onChange={(e)=>{
             this.setState({"answer": e.target.value})
@@ -160,7 +160,7 @@ class HomeContainer extends Component{
             e.preventDefault();
             this.onKeySubmitNote(e.shiftKey, e.keyCode);
           }}} 
-          placeholder="main points / answer" title="Press [tab] to move to the 'add note' button.">
+          placeholder="main points / answer">
           </textarea>
           <button disabled={keyword.length === 0 || answer.length === 0 || loading} tabIndex="0" className={getButtonClassName(keyword, answer)} 
           onClick={(e) => {this.onSubmitNote()}}>

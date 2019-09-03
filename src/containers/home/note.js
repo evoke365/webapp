@@ -13,7 +13,6 @@ const NoteContainer = ({note, onDeleteNote, onMarkImportant, loading}) => (
       <div className="container-switch">
         <div className="btn-panel-note">
           <button 
-          title="Beat the forgetting curve! When turned, this note is scheduled for revised."
           tabIndex="-1" 
           className={note.Important ? '_button btn-panel-button calendar-check' : '_button btn-panel-button calendar-uncheck'}
           onClick={onMarkImportant}>
