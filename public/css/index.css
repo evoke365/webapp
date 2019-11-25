@@ -139,7 +139,7 @@ hr {
   position: absolute;
   width: 100%;
   top: 60px;
-  bottom: 103px;
+  bottom: 143px;
   right: 0;
   padding:0px 10px 0px 10px;
 }
@@ -150,7 +150,7 @@ hr {
 
 .container-c {
   position: absolute;
-  height: 103px;
+  height: 143px;
   bottom:0;
   left: 0;
   right: 0;
@@ -166,7 +166,7 @@ hr {
   display: block;
   float: left;
   width: 25.3424657534%;
-  height: 73px;
+  height: 113px;
   margin-left: 2.5%;
   padding: 5px;
   border: 1px solid rgb(251, 167, 59);
@@ -187,7 +187,7 @@ hr {
   display: block;
   float: left;
   width: 50%;
-  height: 73px;
+  height: 113px;
   margin-left: 2.5%;
   padding: 5px;
   border: 1px solid rgb(251, 167, 59);
@@ -208,7 +208,7 @@ hr {
   display: block;
   float: left;
   width: 13.5844748858%;
-  height: 73px;
+  height: 113px;
   margin-left: 2.5%;
   background-color: rgb(251, 167, 59);
   font-size: 1em;
@@ -225,7 +225,7 @@ hr {
   display: block;
   float: left;
   width: 13.5844748858%;
-  height: 73px;
+  height: 113px;
   margin-left: 2.5%;
   background-color: rgb(233, 233, 233);
   font-size: 1em;
