@@ -57,7 +57,7 @@ export default function authPassword(state = initialState, action){
     return {
       ...state,
       ...{
-        action: action.payload.action,
+        action: "forget",
         error: "",
         loading: false,
       },
