@@ -26,7 +26,7 @@ export default function note(state = initialState, action) {
     return {
       ...state,
       ...{
-        notes: action.payload,
+        notes: action.payload === null ? state.notes : action.payload,
         error: "",
         loading: false,
       },
