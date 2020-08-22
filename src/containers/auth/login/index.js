@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { submitPassword, forgetPassword, clearError } from '../../../actions/login'
 import { logout } from '../../../actions/logout'
 import { loadState, saveState } from '../../../localStorage'
+import LogoContainer from '../logo'
 import PasswordContainer from '../password'
 import Slide from '@material-ui/core/Slide';
 import { withStyles } from '@material-ui/core/styles'
@@ -106,9 +107,7 @@ class LoginContainer extends Component{
       <div className={classes.container}>
         <Slide direction="down" in={true} mountOnEnter unmountOnExit>
           <div>
-            <div className={classes.header}>
-              <p className={classes.logo}>studybox.io</p>
-            </div>
+            <LogoContainer />
             <div className={classes.message}>Welcome back, {email}</div>
             
           </div>
@@ -130,21 +129,10 @@ const style = theme => ({
     maxWidth: '1024px',
     paddingTop: '10%',
   },
-  header: {
-    textAlign: 'center',
-  },
   message: {
     fontSize: '1.2em',
     color: '#000000',
     textAlign: 'center',
-  },
-  logo: {
-    minHeight: '55px',
-    fontSize: '2em',
-    fontWeight: '300',
-    fontStyle: 'italic',
-    color: 'rgb(251, 167, 59)',
-    marginLeft: '10px',
   },
 })
 
