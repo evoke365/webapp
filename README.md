@@ -4,8 +4,15 @@ The source code of evoke365.net wep app.
 
 ## Running on localhost
 install project dependencies:
+
 ```
 sudo npm install
+```
+
+Run webapp unit test
+
+```
+npm run test
 ```
 
 Start webapp on localhost:

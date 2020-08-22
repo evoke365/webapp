@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import { APP_NAME } from '../../config'
 
 var FontAwesome = require('react-fontawesome');
 
 const NavContainer = ({onLogout}) => (
   <div>
-    <div className="text-title" >studybox.io</div>
+    <div className="text-title" >{APP_NAME}</div>
     <div className="home-left-top">
       <p className="a-text">
         <button tabIndex="-1" className="_button btn-logout"  

@@ -1,3 +1,5 @@
+export const APP_NAME = "evoke365"
+
 export const RESOURCE_API = "http://localhost:8080"
 export const AUTH_API = "http://localhost:8090"
 
