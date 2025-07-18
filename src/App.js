@@ -1,22 +1,21 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import AuthContainer from './containers/auth'
-import LoginContainer from './containers/auth/login';
-import SignupContainer from './containers/auth/signup';
-import VerifyContainer from './containers/auth/verify';
-import ForgetContainer from './containers/auth/forget';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import GoogleAuthContainer from './containers/auth/GoogleAuthContainer';
 import HomeContainer from './containers/home';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function AppRouter() {
   return (
     <Router>
-        <Route path="/" exact component={AuthContainer} />
-        <Route path="/signin" component={LoginContainer} />
-        <Route path="/signup" component={SignupContainer} />
-        <Route path="/verify" component={VerifyContainer} />
-        <Route path="/forget" component={ForgetContainer} />
-        <Route path="/home" component={HomeContainer} />
-      </Router>
+      <Routes>
+        <Route path="/" element={<GoogleAuthContainer />} />
+        <Route path="/home" element={
+          <ProtectedRoute>
+            <HomeContainer />
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,13 +1,17 @@
-import React, { Component } from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { getNotes, submitNote, deleteNote, markNotes } from '../../actions/home'
-import { logout } from '../../actions/logout'
+import React, { useState, useEffect } from 'react'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { 
+  useGetNotesQuery, 
+  useSubmitNoteMutation, 
+  useDeleteNoteMutation, 
+  useMarkNoteMutation 
+} from '../../store/api'
 import { loadState } from '../../localStorage'
 import NoteContainer from './note'
 import NavContainer from './nav'
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import BarLoader from 'react-spinners/BarLoader';
 import ScrollToBottom from 'react-scroll-to-bottom';
 
@@ -21,156 +25,143 @@ const override = css`
   bottom: 0;
 `;
 
-class HomeContainer extends Component{
-  state = {
-    keyword: "",
-    answer: "",
-    loadingNote: false,
-    notes: [],
-  }
-  componentDidMount() {
-    let email = loadState("email");
-    let token = loadState("token");
-    if(email === undefined || token === undefined) {
-      this.props.history.push("/");
-      return undefined;
-    }
-    this.props.getNotes(token);
-  }
-  componentDidUpdate() {
-    const { loading, notes } = this.props.store.note;
-    const { loadingNote } = this.state;
-    // initial loading
-    if(notes.length > 0 && this.state.notes.length === 0) {
-      this.setState({
-        notes: notes,
-      })
-      return undefined
-    }
+const HomeContainer = () => {
+  const [keyword, setKeyword] = useState("");
+  const [answer, setAnswer] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  // Get token for API calls
+  const token = loadState("token");
+  const email = loadState("email");
+  
+  // RTK Query hooks
+  const { data: notes = [], isLoading } = useGetNotesQuery(token);
+  const [submitNote, { isLoading: isSubmitting }] = useSubmitNoteMutation();
+  const [deleteNote, { isLoading: isDeleting }] = useDeleteNoteMutation();
+  const [markNote, { isLoading: isMarking }] = useMarkNoteMutation();
 
-    if(loading !== loadingNote) {
-      // new note added, reset state
-      if(loading === true) {
-        this.setState({
-          loadingNote : true,
-          notes: notes,
-        })
-      } else {
-        this.setState({
-          keyword: "",
-          answer: "",
-          loadingNote: false,
-        })
-      }
-      return undefined;
+  useEffect(() => {
+    if (!email || !token) {
+      navigate("/");
     }
-  }
-  onDeleteNote(noteId, index){
-    let token = loadState("token");
-    this.props.deleteNote(token, noteId, index);
-  }
-  onSubmitNote(){
-    const { keyword, answer } = this.state;
-    if(keyword !== "" && answer !== "") {
-      this.props.submitNote(loadState("token"), keyword, answer);
+  }, [email, token, navigate]);
+
+  const handleDeleteNote = async (noteId) => {
+    try {
+      await deleteNote({ token, noteId }).unwrap();
+    } catch (error) {
+      console.error('Failed to delete note:', error);
     }
-  }
-  onKeySubmitNote(shifted, keyCode){
-    const { keyword, answer } = this.state;
-    if(keyword.length > 0 && answer.length > 0){
-      if(keyCode === 13 && shifted){
-        this.onSubmitNote();
+  };
+
+  const handleSubmitNote = async () => {
+    if (keyword !== "" && answer !== "") {
+      try {
+        await submitNote({ token, title: keyword, body: answer }).unwrap();
+        setKeyword("");
+        setAnswer("");
+      } catch (error) {
+        console.error('Failed to submit note:', error);
       }
     }
-  }
-  onMarkImportant(noteId, index, isImportant) {
-    let token = loadState("token");
-    this.props.markNotes(noteId, token, isImportant, index)
-  }
-  getNoteConatiner(note, index, loading) {
+  };
+
+  const handleKeySubmitNote = (event) => {
+    if (keyword.length > 0 && answer.length > 0) {
+      if (event.key === 'Enter' && event.shiftKey) {
+        event.preventDefault();
+        handleSubmitNote();
+      }
+    }
+  };
+
+  const handleMarkImportant = async (noteId, isImportant) => {
+    try {
+      await markNote({ noteId, token, important: isImportant }).unwrap();
+    } catch (error) {
+      console.error('Failed to mark note:', error);
+    }
+  };
+
+  const getNoteContainer = (note, index) => {
     return (
       <NoteContainer
         key={note.Id}
         note={note}
-        onDeleteNote={() => this.onDeleteNote(note.Id, index)}
-        onMarkImportant={() => this.onMarkImportant(note.Id, index, !note.Important)}
-        loading={loading}
+        onDeleteNote={() => handleDeleteNote(note.Id)}
+        onMarkImportant={() => handleMarkImportant(note.Id, !note.Important)}
+        loading={isDeleting || isMarking}
       />
     );
-  }
-  getNavContainer() {
+  };
+
+  const getNavContainer = () => {
     return (
       <NavContainer
-        onLogout={()=>{
-          this.props.logout();
-          this.props.history.push("/");
+        onLogout={() => {
+          dispatch({ type: 'USER_LOGOUT' });
+          navigate("/");
         }}
       />
-    )
-  }
-  render(){
-    const { keyword, answer, notes } = this.state;
-    const { loading } = this.props.store.note;
-    return (
-      <div>
-        <div className="container-a">
-          {this.getNavContainer()}
-        </div>
-        <div className="container-b">
-          <ScrollToBottom className="toBottom">
-            <ReactCSSTransitionGroup 
-              transitionName="animated"
-              transitionAppear={true}
-              transitionLeave={true}
-              transitionEnterTimeout={200}
-              transitionAppearTimeout={200}
-              transitionLeaveTimeout={500}
-            >
+    );
+  };
+
+  return (
+    <div>
+      <div className="container-a">
+        {getNavContainer()}
+      </div>
+      <div className="container-b">
+        <ScrollToBottom className="toBottom">
+          <TransitionGroup>
             {Array.isArray(notes) ? notes.map((note, index) => (
-              this.getNoteConatiner(note, index, loading)
+              <CSSTransition
+                key={note.Id}
+                timeout={200}
+                classNames="animated"
+                appear={true}
+              >
+                {getNoteContainer(note, index)}
+              </CSSTransition>
             )) : null}
-            </ReactCSSTransitionGroup>
-          </ScrollToBottom>
-          <BarLoader
-            css={override}
-            color={'#FBA73B'}
-            loading={loading}
-          />
-        </div>
-        <div className="container-c">
-          <textarea onChange={(e)=>{
-            this.setState({"keyword": e.target.value})
-          }} 
+          </TransitionGroup>
+        </ScrollToBottom>
+        <BarLoader
+          css={override}
+          color={'#FBA73B'}
+          loading={isLoading || isSubmitting}
+        />
+      </div>
+      <div className="container-c">
+        <textarea 
+          onChange={(e) => setKeyword(e.target.value)}
           tabIndex="0" 
           className="question" 
           value={keyword} 
-          onKeyDown={(e)=>{if(e.shiftKey && e.keyCode===13){
-            e.preventDefault(); 
-            this.onKeySubmitNote(e.shiftKey, e.keyCode);
-            }}}  
-          placeholder="keyword / question" ref="keywordInput">
-          </textarea>
-          <textarea onChange={(e)=>{
-            this.setState({"answer": e.target.value})
-          }} 
+          onKeyDown={handleKeySubmitNote}
+          placeholder="keyword / question"
+        />
+        <textarea 
+          onChange={(e) => setAnswer(e.target.value)}
           tabIndex="0" 
           className="answer" 
           value={answer} 
-          onKeyDown={(e)=>{if(e.shiftKey && e.keyCode===13){
-            e.preventDefault();
-            this.onKeySubmitNote(e.shiftKey, e.keyCode);
-          }}} 
-          placeholder="main points / answer">
-          </textarea>
-          <button disabled={keyword.length === 0 || answer.length === 0 || loading} tabIndex="0" className={getButtonClassName(keyword, answer)} 
-          onClick={(e) => {this.onSubmitNote()}}>
-            <p>add</p>
-          </button>
-        </div>
+          onKeyDown={handleKeySubmitNote}
+          placeholder="main points / answer"
+        />
+        <button 
+          disabled={keyword.length === 0 || answer.length === 0 || isSubmitting} 
+          tabIndex="0" 
+          className={getButtonClassName(keyword, answer)} 
+          onClick={handleSubmitNote}
+        >
+          <p>add</p>
+        </button>
       </div>
-    )
-  }
-}
+    </div>
+  );
+};
 
 function getButtonClassName(keyword, answer){
   if(keyword.length === 0 || answer.length === 0){
@@ -179,15 +170,4 @@ function getButtonClassName(keyword, answer){
   return "addnote";
 }
 
-function mapStateToProps(store, props) {
-  return {store,props}
-}
-
-function mapDispatchToProps(dispatch) {
-  return Object.assign({}, bindActionCreators({ getNotes, submitNote, deleteNote, markNotes, logout }, dispatch))
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeContainer)
+export default HomeContainer;

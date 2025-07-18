@@ -1,38 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux'
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux'
-import axios from 'axios';
-import axiosMiddleware from 'redux-axios-middleware';
 import AppRouter from './App';
-import { RESOURCE_API } from './config'
-import reducers from './reducers'
+import { store } from './store';
 import * as serviceWorker from './serviceWorker';
 
-const options = {
-  interceptors: {
-      response: [
-      {
-          // args are { getState, dispatch, getSourceAction }, response
-          success: (_, response) => response.data,
-          // args are { getState, dispatch, getSourceAction }, error
-          error: (_, error) => Promise.reject(error),
-      },
-      ],
-  },
-};
-
-const client = axios.create({
-  baseURL: RESOURCE_API,
-  responseType: 'json',
-});
-
-const store = createStore(reducers, {}, applyMiddleware(axiosMiddleware(client, options)));
-ReactDOM.render(	
-    <Provider store = {store}>
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
+    <Provider store={store}>
         <AppRouter />
-    </Provider>,
-     document.getElementById('root')
+    </Provider>
 );
 
 // If you want your app to work offline and load faster, you can change
