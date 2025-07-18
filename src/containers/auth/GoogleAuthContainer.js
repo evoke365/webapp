@@ -34,7 +34,7 @@ const ErrorMessage = styled('div')({
 });
 
 // You'll need to get this from Google Cloud Console
-const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || 'your-google-client-id-here';
+const GOOGLE_CLIENT_ID = "942582519364-gn4puh22ulc8o1tceaog16m19gi54p3q.apps.googleusercontent.com";
 
 const GoogleAuthContainer = () => {
   const dispatch = useDispatch();
